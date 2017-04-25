@@ -15,7 +15,6 @@
 
 # Fortran module files
 *.mod
-*.smod
 
 # Compiled Static libraries
 *.lai
@@ -27,3 +26,9 @@
 *.exe
 *.out
 *.app
+.pioenvs
+.piolibdeps
+.clang_complete
+.gcc-flags.json
+
+/src/local.h
