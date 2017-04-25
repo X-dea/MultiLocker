@@ -2,8 +2,6 @@
  * MultiLocker (GPLv3)
  * Support by CTBeta Team
  * Created by Jason C.H Feb 2017
- * 整理者：Jason C.H
- * 整理时间：2017.4.26
  */
 #ifndef HAL_ARDUPROMINI_H
 #define  HAL_ARDUPROMINI_H

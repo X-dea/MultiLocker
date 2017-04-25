@@ -1,5 +1,5 @@
 /*
- * MultiLockers (GPLv3)
+ * MultiLocker (GPLv3)
  * Support by CTBeta Team
  * Created by Jason C.H Feb 2017
  * 整理者：Jason C.H

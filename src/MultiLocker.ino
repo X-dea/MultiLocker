@@ -1,8 +1,14 @@
+/*
+ * MultiLocker (GPLv3)
+ * Support by CTBeta Team
+ * Created by Jason C.H Feb 2017
+ */
+
 #include "config.h"
 #include "buzzer.h"
 
 #ifdef USE_RC522
-  #include "rc522.h"
+  #include "Link_rc522.h"
   RC522 Rfidauth;
   extern class RFID Rc522;
 #endif

@@ -1,14 +1,12 @@
 /*
- * MultiLockers (GPLv3)
+ * MultiLocker (GPLv3)
  * Support by CTBeta Team
  * Created by Jason C.H Feb 2017
- * 整理者：Jason C.H
- * 整理时间：2017.2.26
  */
 
 #include <RFID.h>
 #include "Config.h"
-#include "RC522.h"
+#include "Link_rc522.h"
 
 #ifdef USE_LOCAL
   #include "local.h"
