@@ -1,8 +1,8 @@
-/*
- * MultiLocker (GPLv3)
- * Support by CTBeta Team
- * Created by Jason C.H Feb 2017
- */
+/**
+* MultiLocker (GPLv3)
+* Support by CTBeta Team
+* Created by Jason C.H Feb 2017
+*/
 
 #ifndef LINK_RC522_H
 #define LINK_RC522_H
