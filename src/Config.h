@@ -14,7 +14,7 @@
 //定义启用的认证类型(唯一启用)
 #define USE_RC522
 //#define USE_LB522
-//#define USE_FINGERPRINT
+//#define USE_R308
 
 //DATALINK DEFINETION(ONLY ONE)
 //定义启用的认证存储（唯一启用）

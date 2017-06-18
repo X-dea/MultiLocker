@@ -22,6 +22,7 @@ unsigned char serNum[5];
 RC522::RC522(){
  SPI.begin();
  Rc522.init();
+ Serial.begin(57600);
 };
 
 /**
