@@ -7,22 +7,6 @@
 #include <Arduino.h>
 #include <CTB_R308.h>
 
-unsigned char FP_Init[10]={0x01,0x00,0x07,0x13,0x00,0x00,0x00,0x00,0x00,0x1B};//模块握手验证
-unsigned char FP_Pack_Head[6] = {0xEF,0x01,0xFF,0xFF,0xFF,0xFF};  //协议包头
-unsigned char FP_Get_Img[6] = {0x01,0x00,0x03,0x01,0x0,0x05};    //获得指纹图像
-unsigned char FP_Templete_Num[6] ={0x01,0x00,0x03,0x1D,0x00,0x21 }; //获得模版总数
-unsigned char FP_Search[11]={0x01,0x0,0x08,0x04,0x01,0x0,0x0,0x01,0xF4,0x0,0xB2}; //搜索指纹搜索范围0 - 929
-//unsigned char FP_Search_0_9[11]={0x01,0x0,0x08,0x04,0x01,0x0,0x0,0x0,0x13,0x0,0x21}; //搜索0-9号指纹
-unsigned char FP_Img_To_Buffer1[7]={0x01,0x0,0x04,0x02,0x01,0x0,0x08}; //将图像放入到BUFFER1
-unsigned char FP_Img_To_Buffer2[7]={0x01,0x0,0x04,0x02,0x02,0x0,0x09}; //将图像放入到BUFFER2
-unsigned char FP_Reg_Model[6]={0x01,0x0,0x03,0x05,0x0,0x09}; //将BUFFER1跟BUFFER2合成特征模版
-unsigned char FP_Delet_All_Model[6]={0x01,0x0,0x03,0x0d,0x00,0x11};//删除指纹模块里所有的模版
-unsigned char FP_Save_Finger[9]={0x01,0x00,0x06,0x06,0x01,0x00,0x0B,0x00,0x19};//将BUFFER1中的特征码存放到指定的位置
-unsigned char FP_Delete_Model[10]={0x01,0x00,0x07,0x0C,0x0,0x0,0x0,0x1,0x0,0x0}; //删除指定的模版
-//volatile unsigned char FINGER_NUM;
-
-unsigned char FP_SerialRead[10];
-
 CTB_R308::CTB_R308(){
 }
 
@@ -37,7 +21,7 @@ bool CTB_R308::init(){
   SerialClean();
   Serial.write(&FP_Pack_Head[0],6);
   Serial.write(&FP_Init[0],10);
-  delay(100);
+  delay(10);
   return true;
  }
 /**
@@ -46,10 +30,13 @@ bool CTB_R308::init(){
 * 输入参数：无
 * 返 回 值：无
 */
- void CTB_R308::Cmd_Get_Img(){
-  Serial.write(&FP_Pack_Head[0],6);
-  Serial.write(&FP_Get_Img[0],6);
- }
+bool CTB_R308::Cmd_Get_Img(){
+   SerialClean();
+   Serial.write(&FP_Pack_Head[0],6);
+   Serial.write(&FP_Get_Img[0],6);
+   delay(300);
+   return SerialRead();
+}
 
 /**
 * 函 数 名：Cmd_Img_To_Buffer1
@@ -57,9 +44,12 @@ bool CTB_R308::init(){
 * 输入参数：无
 * 返 回 值：无
 */
-void CTB_R308::Cmd_Img_To_Buffer1(){
+bool CTB_R308::Cmd_Img_To_Buffer1(){
+  SerialClean();
   Serial.write(&FP_Pack_Head[0],6);
   Serial.write(&FP_Img_To_Buffer1[0],7);
+  delay(500);
+  return SerialRead();
 }
 
 /**
@@ -68,9 +58,12 @@ void CTB_R308::Cmd_Img_To_Buffer1(){
 * 输入参数：无
 * 返 回 值：无
 */
-void CTB_R308::Cmd_Img_To_Buffer2(){
+bool CTB_R308::Cmd_Img_To_Buffer2(){
+  SerialClean();
   Serial.write(&FP_Pack_Head[0],6);
   Serial.write(&FP_Img_To_Buffer2[0],7);
+  delay(500);
+  return SerialRead();
 }
 
 /**
@@ -79,9 +72,26 @@ void CTB_R308::Cmd_Img_To_Buffer2(){
 * 输入参数：无
 * 返 回 值：无
 */
-void CTB_R308::Cmd_Reg_Model(){
+bool CTB_R308::Cmd_Reg_Model(){
+  SerialClean();
   Serial.write(&FP_Pack_Head[0],6);
   Serial.write(&FP_Reg_Model[0],6);
+  delay(50);
+  return SerialRead();
+}
+
+/**
+* 函 数 名：Cmd_Save_Finger
+* 功能描述：将BUFFER1中的特征码存放到指定的位置
+* 输入参数：无
+* 返 回 值：无
+*/
+bool CTB_R308::Cmd_Save_Finger(){
+  SerialClean();
+  Serial.write(&FP_Pack_Head[0],6);
+  Serial.write(&FP_Save_Finger[0],9);
+  delay(100);
+  return SerialRead();
 }
 
 /**
@@ -90,9 +100,12 @@ void CTB_R308::Cmd_Reg_Model(){
 * 输入参数：无
 * 返 回 值：无
 */
-void CTB_R308::Cmd_Delete_All_Model(){
+bool CTB_R308::Cmd_Delete_All_Model(){
+  SerialClean();
   Serial.write(&FP_Pack_Head[0],6);
   Serial.write(&FP_Delet_All_Model[0],6);
+  delay(1000);
+  return SerialRead();
 }
 
 /**
@@ -123,9 +136,12 @@ void CTB_R308::Cmd_Delete_Model(unsigned int ID_temp){
 * 输入参数：无
 * 返 回 值：无
 */
-void CTB_R308::Cmd_Search_Finger(){
+bool CTB_R308::Cmd_Search_Finger(){
+  SerialClean();
   Serial.write(&FP_Pack_Head[0],6);
   Serial.write(&FP_Search[0],11);
+  delay(1000);
+  return SerialRead();
 }
 
 /**
@@ -135,6 +151,9 @@ void CTB_R308::Cmd_Search_Finger(){
 * 返 回 值：无
 */
 void CTB_R308::SerialClean(){
+  for(int i=0;i<10;i++){
+    FP_SerialRead[i]=0;
+  }
   while(Serial.read() >= 0){}
 }
 
@@ -145,9 +164,9 @@ void CTB_R308::SerialClean(){
 * 返 回 值：成功true/不成功false
 */
 bool CTB_R308::SerialRead(){
-  //等待应答 wait for reaction
+  //等待应答
   while (Serial.available()<=0){}
-  //验证模块地址和应答包 module id auth
+  //验证模块地址和应答包
   if (Serial.read()==0xEF && Serial.read()==0x01){
     for(int i=0;i<4;i++){
       if (Serial.read()!=FP_Pack_Head[i+2])
@@ -156,7 +175,7 @@ bool CTB_R308::SerialRead(){
     if (Serial.read()!=0x07) return false;
   }else return false;
   //接收包
-  Serial.read();
+  Serial.read();//去除空字节
   FP_SerialRead[0]=Serial.read();
   for (int i=1;i<=FP_SerialRead[0];i++)
     FP_SerialRead[i]=Serial.read();
