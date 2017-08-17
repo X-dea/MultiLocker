@@ -1,6 +1,6 @@
 /**
 * MultiLocker (GPLv3)
-* Support by CTBeta Team
+* Support by CTBeta Team http://ctbeta.org/
 * Created by Jason C.H Feb 2017
 */
 
@@ -9,12 +9,12 @@
 
 class R308 {
 private:
-  /* data */
-
+  void saveFingerId(int ID_temp);
 public:
-  R308 ();
-  virtual ~R308 ();
+  R308();
+  //~R308();
+  void setupMode();
+  bool searchFinger();
 };
-
 
 #endif

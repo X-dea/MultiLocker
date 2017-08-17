@@ -43,6 +43,7 @@ public:
   buzzer();
 
   void start();
+  void setupMode();
   void open();
 
 };

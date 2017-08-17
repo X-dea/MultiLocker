@@ -10,10 +10,13 @@
 
 //TUNE DEFINITION
 //定义音调
-int starttune[]={
+int startTune[]={
   M3,M4,M5,M6
 };
-int opentune[]={
+int setupModeTune[]={
+  M3,M4,M4,M4
+};
+int openTune[]={
   H3
 };
 
@@ -23,20 +26,31 @@ buzzer::buzzer(){
 
 //Buzzer when start
 void buzzer::start(){
-  int length=sizeof(starttune)/sizeof(starttune[0]);
+  int length=sizeof(startTune)/sizeof(startTune[0]);
   for(int i=0;i<=length;i++){
-    tone(PIN_BUZZER,starttune[i]);
+    tone(PIN_BUZZER,startTune[i]);
     delay(120);
     noTone(PIN_BUZZER);
     delay(20);
   }
 }
 
+void buzzer::setupMode(){
+  int length=sizeof(setupModeTune)/sizeof(setupModeTune[0]);
+  for(int i=0;i<=length;i++){
+    tone(PIN_BUZZER,setupModeTune[i]);
+    delay(120);
+    noTone(PIN_BUZZER);
+    delay(20);
+  }
+}
+
+
 //Buzzer when open
 void buzzer::open(){
-  int length=sizeof(opentune)/sizeof(opentune[0]);
+  int length=sizeof(openTune)/sizeof(openTune[0]);
   for(int i=0;i<=length;i++){
-    tone(PIN_BUZZER,opentune[i]);
+    tone(PIN_BUZZER,openTune[i]);
     delay(120);
     noTone(PIN_BUZZER);
     delay(20);

@@ -11,41 +11,78 @@
 
 #endif
 
+// Initialize Auth Module
+//初始化认证模块
 #ifdef USE_RC522
-  #include "Link_rc522.h"
-  RC522 Rfidauth;
-  extern class RFID Rc522;
+#include "Link_rc522.h"
+RC522 Rfid;
+extern class RFID Rc522;
 #endif
 
 #ifdef USE_R308
-  #include "Link_r308.h"
-  R308 FPauth;
-  extern class CTB_R308 R308;
+#include "Link_r308.h"
+#include <CTB_R308.h>
+R308 FP;
+extern class CTB_R308 r308;
 #endif
 
+// Initialize buzzer
 //初始化蜂鸣器
 buzzer Buzzer;
 
-void open(){
-	Buzzer.open();
-	digitalWrite(PIN_LOCK,HIGH);
-	delay(2000);
-  digitalWrite(PIN_LOCK,LOW);
+// Open Lock Function
+//开锁函数
+void open() {
+  Buzzer.open();
+  digitalWrite(PIN_LOCK, HIGH);
+  delay(2000);
+  digitalWrite(PIN_LOCK, LOW);
 }
 
+// Setup Mode
+//设定模式
+void setupMode() {
+  Buzzer.setupMode();
+
+#ifdef USE_R308
+  r308.init();
+  FP.setupMode();
+#endif
+
+  for (;;) {
+  }
+}
+
+// Main
+//主程序
 void setup() {
-  pinMode(PIN_LOCK,OUTPUT);
+  pinMode(PIN_LOCK, OUTPUT);
+
+  if (digitalRead(PIN_INBUTTON == 1))
+    setupMode();
+
   Buzzer.start();
 }
 
 void loop() {
-  if(digitalRead(PIN_INBUTTON)!=1)
-	{
-    if (Rfidauth.findCard()) {
-      bool temp=Rfidauth.authId();
-      bool temp2=Rfidauth.authKey();
-      if (temp&&temp2)
-        open();
-    }
-  }else open();
+
+  if (digitalRead(PIN_INBUTTON) == HIGH)
+    open();
+
+#ifdef USE_RC522
+  if (Rfid.findCard()) {
+    bool temp = Rfid.authId();
+    bool temp2 = Rfid.authKey();
+    if (temp && temp2)
+      open();
+  }
+#endif
+
+#ifdef USE_R308
+  r308.init();
+  if (digitalRead(PIN_DETECT==LOW)) {
+    if(FP.searchFinger()==true)
+      open();
+  }
+#endif
 }
