@@ -1,12 +1,16 @@
 /**
 * MultiLocker (GPLv3)
-* Support by CTBeta Team
+* Support by CTBeta Team http://ctbeta.org/
 * Created by Jason C.H Feb 2017
 */
 
 #include "Config.h"
 #include "buzzer.h"
-String comdata = "";
+
+#ifdef USE_DISPLAY
+
+#endif
+
 #ifdef USE_RC522
   #include "Link_rc522.h"
   RC522 Rfidauth;
@@ -37,9 +41,9 @@ void setup() {
 void loop() {
   if(digitalRead(PIN_INBUTTON)!=1)
 	{
-    if (Rfidauth.findcard()) {
-      bool temp=Rfidauth.authid();
-      bool temp2=Rfidauth.authkey();
+    if (Rfidauth.findCard()) {
+      bool temp=Rfidauth.authId();
+      bool temp2=Rfidauth.authKey();
       if (temp&&temp2)
         open();
     }

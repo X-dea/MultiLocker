@@ -1,6 +1,6 @@
 /**
 * MultiLocker (GPLv3)
-* Support by CTBeta Team
+* Support by CTBeta Team http://ctbeta.org/
 * Created by Jason C.H Feb 2017
 */
 
@@ -12,14 +12,12 @@
 
 class RC522 {
 private:
-
 public:
-
   RC522();
-  bool findcard();
-  bool authid();
-  bool authkey();
-
+  //~RC522();
+  bool findCard();
+  bool authId();
+  bool authKey();
 };
 
 #endif

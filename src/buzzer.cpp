@@ -1,6 +1,6 @@
 /**
 * MultiLocker (GPLv3)
-* Support by CTBeta Team
+* Support by CTBeta Team http://ctbeta.org/
 * Created by Jason C.H Feb 2017
 */
 

@@ -1,6 +1,6 @@
 /**
 * MultiLocker (GPLv3)
-* Support by CTBeta Team
+* Support by CTBeta Team http://ctbeta.org/
 * Created by Jason C.H Feb 2017
 */
 #ifndef CONFIG_H
@@ -19,6 +19,11 @@
 //DATALINK DEFINETION(ONLY ONE)
 //定义启用的认证存储（唯一启用）
 #define USE_LOCAL
+
+//LCD DEFINITION
+//显示屏相关
+//#define USE_DISPLAY
+
 
 //MYSQL DEFINITION
 //启用MYSQL数据库(仅在网络存储启用时可定义)
