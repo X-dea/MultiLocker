@@ -153,7 +153,7 @@ bool CTB_R308::Cmd_Search_Finger() {
   SerialClean();
   Serial.write(&FP_Pack_Head[0], 6);
   Serial.write(&FP_Search[0], 11);
-  delay(1000);
+  delay(100);
   return SerialRead();
 }
 
@@ -165,7 +165,7 @@ bool CTB_R308::Cmd_Search_Finger() {
 */
 void CTB_R308::SerialClean() {
   for (int i = 0; i < 10; i++) {
-    FP_SerialRead[i] = 0;
+    FP_SerialRead[i] = 0xFF;
   }
   while (Serial.read() >= 0) {
   }

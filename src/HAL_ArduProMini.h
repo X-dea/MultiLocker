@@ -21,6 +21,6 @@
 #define PIN_BUZZER 5   // BUZZER
 #define PIN_RFID_RST 5 // RFID
 #define PIN_LOCK 9     // lOCK
-#define PIN_DETECT 2   // Detector
+#define PIN_DETECT 4   // Detector
 
 #endif
