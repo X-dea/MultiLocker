@@ -19,9 +19,7 @@ R308::R308() { Serial.begin(57600); };
 * 返 回 值：无
 */
 void R308::setupMode() {
-  while (digitalRead(PIN_INBUTTON) == 1) {
-    // Developing...
-  }
+  
 }
 
 /**

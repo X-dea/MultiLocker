@@ -9,6 +9,7 @@
 //HAL DEFINITION
 //定义硬件层
 #include "HAL_ArduProMini.h"
+//#include "HAL_ArduMega2560.h"
 
 //AUTHTYPE DEFINITION(ONLY ONE)
 //定义启用的认证类型(唯一启用)
@@ -16,13 +17,26 @@
 //#define USE_LB522
 #define USE_R308
 
-//DATALINK DEFINETION(ONLY ONE)
+//DATALINK DEFINITION(ONLY ONE)
 //定义启用的认证存储（唯一启用）
 #define USE_LOCAL
 
-//LCD DEFINITION
+//DISPLAY DEFINITION
 //显示屏相关
-//#define USE_DISPLAY
+#define USE_DISPLAY
+//Flip the screen
+//旋转显示屏
+//#define SCREEN_FLIP
+
+/**
+* DISPLAY TYPE DEFINITION
+* 显示类型定义
+* 1-OLED12864_IIC
+* 2-LCD12864_IIC
+*/
+#ifdef USE_DISPLAY
+  #define DISPLAY_TYPE U8GLIB_SSD1306_128X64
+#endif
 
 
 //MYSQL DEFINITION

@@ -8,7 +8,7 @@
 #include "buzzer.h"
 
 #ifdef USE_DISPLAY
-
+#include "display.h"
 #endif
 
 // Initialize Auth Module
@@ -45,7 +45,6 @@ void setupMode() {
   Buzzer.setupMode();
 
 #ifdef USE_R308
-  r308.init();
   FP.setupMode();
 #endif
 
@@ -58,8 +57,13 @@ void setupMode() {
 void setup() {
   pinMode(PIN_LOCK, OUTPUT);
 
-  if (digitalRead(PIN_INBUTTON) == HIGH)
-    setupMode();
+  if (digitalRead(PIN_INBUTTON) == HIGH){
+    unsigned int timestart=millis();
+    while(digitalRead(PIN_INBUTTON)==HIGH){
+      if ((millis()-timestart)>=10000)
+        setupMode();
+    }
+  }
 
   Buzzer.start();
 }
