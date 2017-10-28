@@ -66,7 +66,8 @@ bool RC522::authId() {
 bool RC522::authKey() {
   int temp = 0;
   blockAddr = 16;
-  status = Rc522.auth(PICC_AUTHENT1A, 19, local.sectorKey[blockAddr / 4],Rc522.serNum);
+  status = Rc522.auth(PICC_AUTHENT1A, 19, local.sectorKey[blockAddr / 4],
+                      Rc522.serNum);
   if (status == MI_OK) //认证区块
   {
     //读数据

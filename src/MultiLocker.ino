@@ -57,10 +57,10 @@ void setupMode() {
 void setup() {
   pinMode(PIN_LOCK, OUTPUT);
 
-  if (digitalRead(PIN_INBUTTON) == HIGH){
-    unsigned int timestart=millis();
-    while(digitalRead(PIN_INBUTTON)==HIGH){
-      if ((millis()-timestart)>=10000)
+  if (digitalRead(PIN_INBUTTON) == HIGH) {
+    unsigned int timestart = millis();
+    while (digitalRead(PIN_INBUTTON) == HIGH) {
+      if ((millis() - timestart) >= 10000)
         setupMode();
     }
   }
@@ -83,10 +83,10 @@ void loop() {
 #endif
 
 #ifdef USE_R308
-  if (digitalRead(PIN_DETECT)==LOW) {
+  if (digitalRead(PIN_DETECT) == LOW) {
     delay(300);
     r308.init();
-    if(FP.searchFinger()==true)
+    if (FP.searchFinger() == true)
       open();
   }
 #endif
