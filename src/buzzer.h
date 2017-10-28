@@ -1,10 +1,8 @@
-/*
- * MultiLockers (GPLv3)
- * Support by CTBeta Team
- * Created by Jason C.H Feb 2017
- * 整理者：Jason C.H
- * 整理时间：2017.2.26
- */
+/**
+* MultiLocker (GPLv3)
+* Support by CTBeta Team http://ctbeta.org/
+* Created by Jason C.H Feb 2017
+*/
 
 #ifndef BUZZER_H
 #define BUZZER_H
@@ -45,6 +43,7 @@ public:
   buzzer();
 
   void start();
+  void setupMode();
   void open();
 
 };
