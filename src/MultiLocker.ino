@@ -18,8 +18,8 @@ extern class RFID Rc522;
 #ifdef USE_R308
 #include "link_r308.h"
 #include <CTB_R308.h>
-R308 FP;
-extern class CTB_R308 r308;
+LR308 FP;
+extern class R308_act r308;
 #endif
 
 // Initialize buzzer

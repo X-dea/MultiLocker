@@ -8,34 +8,12 @@
    一个R308指纹模块库。
 */
 
-#ifndef CTB_R308_H
-#define CTB_R308_H
+#ifndef R308_H
+#define R308_H
 
 #include <Arduino.h>
 
-class CTB_R308 {
-
-public:
-  unsigned char packSerialRead[10]; ///<Origin retuens. 读取的返回数据
-
-  CTB_R308();
-  /*!
-     \brief Initialize module
-     \brief 初始化函数库，对指纹模块进行握手验证
-     \return true:Finished.完成
-  */
-  bool init();
-
-  short cmdGetImg();
-  short cmdToBuffer1();
-  short cmdToBuffer2();
-  short cmdRegModel();
-  short cmdEmpty();
-  short cmdSaveFinger(unsigned char bufferID, unsigned short pageID);
-  short cmdSearch(unsigned char bufferID, unsigned short startPageID,
-                  unsigned short pageNum);
-  short cmdDeleteModel(unsigned short startPageID, unsigned short pageNum);
-
+class R308 {
 private:
   unsigned char packHead[6] = {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF};
   unsigned char packInit[10] = {0x01, 0x00, 0x07, 0x13, 0x00,
@@ -71,5 +49,106 @@ private:
 
   void serialClean();
   bool serialRead();
+
+public:
+  unsigned char packSerialRead[10]; ///<Origin retuens. 读取的返回数据
+
+  R308();
+  /*!
+     \brief Initialize module
+     \brief 初始化函数库，对指纹模块进行握手验证
+     \return true:Finished.完成
+  */
+  bool init();
+
+  /*!
+     \brief Get fingerprint image.
+     \brief 获得指纹图像
+     \return -1:Failed.收包失败
+              0:Succeeded.成功
+              1:Pack error.收包有误
+              2:No finger.传感器无手指
+              3:Scan Failed.录入失败
+  */
+  short cmdGetImg();
+  /*!
+     \brief Put fingerprint image to buffer1
+     \brief 将图像转换成特征码存放在缓冲区1中
+     \return -1:Failed.收包失败
+              0:Succeeded.成功
+              1:Pack error.收包有误
+              6:Bad image.图像太乱
+              7:Few features.特征点过少
+              15:No image in buffer.没有图像
+  */
+  short cmdToBuffer1();
+  /*!
+     \brief Put fingerprint image to buffer2
+     \brief 将图像转换成特征码存放在缓冲区2中
+     \return -1:Failed.收包失败
+              0:Succeeded.成功
+              1:Pack error.收包有误
+              6:Bad image.图像太乱
+              7:Few features.特征点过少
+              15:No image in buffer.没有图像
+  */
+  short cmdToBuffer2();
+  /*!
+     \brief Merge buffers and generate model.
+     \brief 将缓冲区中的特征码合并成指纹模版
+     \return -1:Failed.收包失败
+              0:Succeeded.成功
+              1:Pack error.收包有误
+              A:Merge error:Not same finger.合并错误:非同一手指
+  */
+  short cmdRegModel();
+  /*!
+     \brief Delete all models.
+     \brief 删除指纹模块里的所有指纹模版
+     \return -1:Failed.收包失败
+              0:Succeeded.成功
+              1:Pack error.收包有误
+              11:Empty failed.清空失败
+  */
+  short cmdEmpty();
+  /*!
+     \brief Save fingerprint from buffer to page.
+     \brief 将缓冲区中的特征码存放到指定的位置
+     \param bufferID(缓冲区号),pageID(指纹库位置)
+     \return -1:Failed.收包失败
+              0:Succeeded.成功
+              1:Pack error.收包有误
+              B:PageID out of range.超出指纹库范围
+              18:Flash error.写Flash出错
+  */
+  short cmdSaveFinger(unsigned short bufferID, unsigned short pageID);
+  /*!
+     \brief Search fingerprint among pages.
+     \brief 从指纹库中搜索指纹
+     \param bufferID(缓冲区号),startPageID(指纹库起始页),pageNum(页数)
+     \return -1:Failed.收包失败
+              0:Finished.搜索完成
+              1:Pack error.收包有误
+              9:Nothing matched.未搜索到
+  */
+  short cmdSearch(unsigned short bufferID, unsigned short startPageID,
+                  unsigned short pageNum);
+  /*!
+     \brief Delete models.
+     \brief 删除指纹模块里的指定指纹模版
+     \param startPageID(指纹库起始页),pageNum(页数)
+     \return -1:Failed.收包失败
+              0:Succeeded.成功
+              1:Pack error.收包有误
+              10:Delete failed.删除失败
+  */
+  short cmdDeleteModel(unsigned short startPageID, unsigned short pageNum);
+};
+
+class R308_act : public R308 {
+public:
+  R308_act();
+
+  bool actRecordFinger(unsigned short bufferID, unsigned short pageID);
 };
 #endif

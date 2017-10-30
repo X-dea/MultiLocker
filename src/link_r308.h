@@ -7,12 +7,12 @@
 #ifndef LINK_R308_H
 #define LINK_R308_H
 
-class R308 {
+class LR308 {
 private:
   void saveFingerId(unsigned short pageID);
 
 public:
-  R308();
+  LR308();
   //~R308();
   void setupMode();
   bool searchFinger();

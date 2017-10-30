@@ -10,14 +10,14 @@
 
 #include <CTB_R308.h>
 
-CTB_R308::CTB_R308() {}
+R308::R308() {}
 
 /*!
    \brief Initialize module
    \brief 初始化函数库，对指纹模块进行握手验证
    \return true:Finished.完成
 */
-bool CTB_R308::init() {
+bool R308::init() {
   Serial.begin(57600);
   serialClean();
   Serial.write(&packHead[0], 6);
@@ -35,7 +35,7 @@ bool CTB_R308::init() {
             2:No finger.传感器无手指
             3:Scan Failed.录入失败
 */
-short CTB_R308::cmdGetImg() {
+short R308::cmdGetImg() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packGetImg[0], 6);
@@ -56,7 +56,7 @@ short CTB_R308::cmdGetImg() {
             7:Few features.特征点过少
             15:No image in buffer.没有图像
 */
-short CTB_R308::cmdToBuffer1() {
+short R308::cmdToBuffer1() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packToBuffer1[0], 7);
@@ -77,7 +77,7 @@ short CTB_R308::cmdToBuffer1() {
             7:Few features.特征点过少
             15:No image in buffer.没有图像
 */
-short CTB_R308::cmdToBuffer2() {
+short R308::cmdToBuffer2() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packToBuffer2[0], 7);
@@ -96,7 +96,7 @@ short CTB_R308::cmdToBuffer2() {
             1:Pack error.收包有误
             A:Merge error:Not same finger.合并错误:非同一手指
 */
-short CTB_R308::cmdRegModel() {
+short R308::cmdRegModel() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packRegModel[0], 6);
@@ -115,7 +115,7 @@ short CTB_R308::cmdRegModel() {
             1:Pack error.收包有误
             11:Empty failed.清空失败
 */
-short CTB_R308::cmdEmpty() {
+short R308::cmdEmpty() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packEmpty[0], 6);
@@ -136,7 +136,7 @@ short CTB_R308::cmdEmpty() {
             B:PageID out of range.超出指纹库范围
             18:Flash error.写Flash出错
 */
-short CTB_R308::cmdSaveFinger(unsigned char bufferID, unsigned short pageID) {
+short R308::cmdSaveFinger(unsigned short bufferID, unsigned short pageID) {
   volatile unsigned int Sum = 0;
 
   packSaveFinger[4] = bufferID;
@@ -168,8 +168,8 @@ short CTB_R308::cmdSaveFinger(unsigned char bufferID, unsigned short pageID) {
             1:Pack error.收包有误
             9:Nothing matched.未搜索到
 */
-short CTB_R308::cmdSearch(unsigned char bufferID, unsigned short startPageID,
-                          unsigned short pageNum) {
+short R308::cmdSearch(unsigned short bufferID, unsigned short startPageID,
+                      unsigned short pageNum) {
   volatile unsigned int Sum = 0;
 
   packSearch[4] = bufferID;
@@ -195,7 +195,7 @@ short CTB_R308::cmdSearch(unsigned char bufferID, unsigned short startPageID,
 }
 
 /*!
-   \brief Search fingerprint among pages.
+   \brief Delete models.
    \brief 删除指纹模块里的指定指纹模版
    \param startPageID(指纹库起始页),pageNum(页数)
    \return -1:Failed.收包失败
@@ -203,8 +203,7 @@ short CTB_R308::cmdSearch(unsigned char bufferID, unsigned short startPageID,
             1:Pack error.收包有误
             10:Delete failed.删除失败
 */
-short CTB_R308::cmdDeleteModel(unsigned short startPageID,
-                               unsigned short pageNum) {
+short R308::cmdDeleteModel(unsigned short startPageID, unsigned short pageNum) {
   volatile unsigned int Sum = 0;
 
   packDeleteModel[4] = (startPageID & 0xFF00) >> 8;
@@ -232,7 +231,7 @@ short CTB_R308::cmdDeleteModel(unsigned short startPageID,
    \brief Clean serial port cache.
    \brief 清空串口缓存
 */
-void CTB_R308::serialClean() {
+void R308::serialClean() {
   for (short i = 0; i < 10; i++) {
     packSerialRead[i] = 0xFF;
   }
@@ -245,7 +244,7 @@ void CTB_R308::serialClean() {
    \brief 从串口读取数据
    \return TRUE/FALSE (Finished完成/Failed失败)
 */
-bool CTB_R308::serialRead() {
+bool R308::serialRead() {
 
   // Wait for data stream.等待数据流
   long timeStart = millis();
