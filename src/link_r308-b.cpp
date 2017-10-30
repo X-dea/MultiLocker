@@ -1,7 +1,7 @@
 /**
 * MultiLocker (GPLv3)
 * Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Feb 2017
+* Created by Jason C.H Feb. 2017
 */
 
 #include "Config.h"
@@ -18,9 +18,7 @@ R308::R308() { Serial.begin(57600); };
 * 输入参数：无
 * 返 回 值：无
 */
-void R308::setupMode() {
-  
-}
+void R308::setupMode() {}
 
 /**
 * 函 数 名：searchFinger
