@@ -4,7 +4,7 @@
    \author Jason C.H
    \date Nov. 2016
 
-   A library for R308 fingerprint module.<br />
+   A library for R308 fingerprint module.\n
    一个R308指纹模块库。
 */
 
@@ -15,6 +15,7 @@ CTB_R308::CTB_R308() {}
 /*!
    \brief Initialize module
    \brief 初始化函数库，对指纹模块进行握手验证
+   \return true (Finished.完成)
 */
 bool CTB_R308::init() {
   Serial.begin(57600);
@@ -26,57 +27,80 @@ bool CTB_R308::init() {
 }
 
 /*!
-   \brief Get fingerprint image
+   \brief Get fingerprint image.
    \brief 获得指纹图像
-   \return True/False (成功/失败)
+   \return -1:Failed.失败
+            0:Succeeded.成功
+            1:Pack error.收包有误
+            2:No finger.传感器无手指
+            3:Scan Failed.录入失败
 */
-bool CTB_R308::cmdGetImg() {
+short CTB_R308::cmdGetImg() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packGetImg[0], 6);
   delay(300);
-  return serialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：cmdToBuffer1
-* 功能描述：将图像转换成特征码存放在Buffer1中
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Put fingerprint image to buffer1
+   \brief 将图像转换成特征码存放在Buffer1中
+   \return
 */
-bool CTB_R308::cmdToBuffer1() {
+short CTB_R308::cmdToBuffer1() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packToBuffer1[0], 7);
   delay(500);
-  return serialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：cmdToBuffer2
-* 功能描述：将图像转换成特征码存放在Buffer2中
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Put fingerprint image to buffer2
+   \brief 将图像转换成特征码存放在Buffer2中
+   \return
 */
-bool CTB_R308::cmdToBuffer2() {
+short CTB_R308::cmdToBuffer2() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packToBuffer2[0], 7);
   delay(500);
-  return serialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：cmdRegModel
-* 功能描述：将BUFFER1 跟 BUFFER2 中的特征码合并成指纹模版
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Merge buffers and generate model.
+   \brief 将BUFFER1 跟 BUFFER2 中的特征码合并成指纹模版
+   \return
 */
 bool CTB_R308::cmdRegModel() {
   serialClean();
   Serial.write(&packHead[0], 6);
   Serial.write(&packRegModel[0], 6);
   delay(50);
+  return serialRead();
+}
+
+/*!
+   \brief Delete all models.
+   \brief 删除指纹模块里的所有指纹模版
+   \return
+*/
+bool CTB_R308::cmdEmpty() {
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packEmpty[0], 6);
+  delay(1000);
   return serialRead();
 }
 
@@ -106,16 +130,16 @@ bool CTB_R308::cmdSaveFinger(unsigned int ID_temp) {
 }
 
 /**
-* 函 数 名：cmdDeleteAll
-* 功能描述：删除指纹模块里的所有指纹模版
+* 函 数 名：cmdSearch
+* 功能描述：搜索全部用户
 * 输入参数：无
-* 返 回 值：true/false
+* 返 回 值：无
 */
-bool CTB_R308::cmdDeleteAll() {
+bool CTB_R308::cmdSearch() {
   serialClean();
   Serial.write(&packHead[0], 6);
-  Serial.write(&packDeletAll[0], 6);
-  delay(1000);
+  Serial.write(&packSearch[0], 11);
+  delay(100);
   return serialRead();
 }
 
@@ -144,27 +168,13 @@ bool CTB_R308::cmdDeleteModel(unsigned int ID_temp) {
   return serialRead();
 }
 
-/**
-* 函 数 名：cmdSearch
-* 功能描述：搜索全部用户
-* 输入参数：无
-* 返 回 值：无
-*/
-bool CTB_R308::cmdSearch() {
-  serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packSearch[0], 11);
-  delay(100);
-  return serialRead();
-}
-
 /*!
    \brief Clean serial port cache.
    \brief 清空串口缓存
 */
 void CTB_R308::serialClean() {
   for (int i = 0; i < 10; i++) {
-    FP_SerialRead[i] = 0xFF;
+    packSerialRead[i] = 0xFF;
   }
   while (Serial.read() >= 0) {
   }
@@ -173,7 +183,7 @@ void CTB_R308::serialClean() {
 /*!
    \brief Read data from serial port.
    \brief 从串口读取数据
-   \return
+   \return TRUE/FALSE (Finished完成/Failed失败)
 */
 bool CTB_R308::serialRead() {
 
@@ -195,8 +205,8 @@ bool CTB_R308::serialRead() {
     return false;
 
   // Receive pack.接收包
-  FP_SerialRead[0] = ((Serial.read() << 8) | Serial.read());
-  for (int i = 1; i <= FP_SerialRead[0]; i++)
-    FP_SerialRead[i] = Serial.read();
+  packSerialRead[0] = ((Serial.read() << 8) | Serial.read());
+  for (int i = 1; i <= packSerialRead[0]; i++)
+    packSerialRead[i] = Serial.read();
   return true;
 }
