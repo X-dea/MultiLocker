@@ -9,7 +9,7 @@
 
 class R308 {
 private:
-  void saveFingerId(int ID_temp);
+  void saveFingerId(unsigned short pageID);
 
 public:
   R308();

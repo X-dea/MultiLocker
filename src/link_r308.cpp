@@ -27,10 +27,10 @@ void R308::setupMode() {}
 * 返 回 值：找到返回ture 未找到返回false
 */
 bool R308::searchFinger() {
-  r308.Cmd_Get_Img();
-  r308.Cmd_Img_To_Buffer1();
-  r308.Cmd_Search_Finger();
-  if (r308.FP_SerialRead[1] == 0x0)
+  r308.cmdGetImg();
+  r308.cmdToBuffer1();
+  r308.cmdSearch(1, 1, 500);
+  if (r308.packSerialRead[1] == 0x0)
     return true;
   else
     return false;
@@ -42,12 +42,12 @@ bool R308::searchFinger() {
 * 输入参数：指纹库ID
 * 返 回 值：无
 */
-void R308::saveFingerId(int ID_temp) {
+void R308::saveFingerId(unsigned short pageID) {
   Serial.println("Saving!");
-  Serial.println(r308.Cmd_Get_Img());
-  Serial.println(r308.Cmd_Img_To_Buffer1());
-  Serial.println(r308.Cmd_Get_Img());
-  Serial.println(r308.Cmd_Img_To_Buffer2());
-  Serial.println(r308.Cmd_Reg_Model());
-  Serial.println(r308.Cmd_Save_Finger(ID_temp));
+  Serial.println(r308.cmdGetImg());
+  Serial.println(r308.cmdToBuffer1());
+  Serial.println(r308.cmdGetImg());
+  Serial.println(r308.cmdToBuffer2());
+  Serial.println(r308.cmdRegModel());
+  Serial.println(r308.cmdSaveFinger(1, pageID));
 }
