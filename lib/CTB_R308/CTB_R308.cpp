@@ -1,200 +1,271 @@
-/**
-* CTBeta R308 Library (GPLv3)
-* Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Nov 2016
+/*!
+   \file CTB_R308.cpp
+   \brief CTBeta R308 Library (GPLv3) Support by CTBeta Team http://ctbeta.org/
+   \author Jason C.H
+   \date Nov. 2016
+
+   A library for R308 fingerprint module.\n
+   一个R308指纹模块库。
 */
 
-#include <Arduino.h>
 #include <CTB_R308.h>
 
-CTB_R308::CTB_R308() {}
+R308::R308() {}
 
-/**
-* 函 数 名：init
-* 功能描述：初始化函数库，对指纹模块进行握手验证
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Initialize module
+   \brief 初始化函数库，对指纹模块进行握手验证
+   \return true:Finished.完成
 */
-bool CTB_R308::init() {
+bool R308::init() {
   Serial.begin(57600);
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Init[0], 10);
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packInit[0], 10);
   delay(10);
   return true;
 }
-/**
-* 函 数 名：Cmd_Get_Img
-* 功能描述：获得指纹图像
-* 输入参数：无
-* 返 回 值：无
+
+/*!
+   \brief Get fingerprint image.
+   \brief 获得指纹图像
+   \return -1:Failed.收包失败
+            0:Succeeded.成功
+            1:Pack error.收包有误
+            2:No finger.传感器无手指
+            3:Scan Failed.录入失败
 */
-bool CTB_R308::Cmd_Get_Img() {
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Get_Img[0], 6);
+short R308::cmdGetImg() {
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packGetImg[0], 6);
   delay(300);
-  return SerialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：Cmd_Img_To_Buffer1
-* 功能描述：将图像转换成特征码存放在Buffer1中
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Put fingerprint image to buffer1
+   \brief 将图像转换成特征码存放在缓冲区1中
+   \return -1:Failed.收包失败
+            0:Succeeded.成功
+            1:Pack error.收包有误
+            6:Bad image.图像太乱
+            7:Few features.特征点过少
+            15:No image in buffer.没有图像
 */
-bool CTB_R308::Cmd_Img_To_Buffer1() {
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Img_To_Buffer1[0], 7);
+short R308::cmdToBuffer1() {
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packToBuffer1[0], 7);
   delay(500);
-  return SerialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：Cmd_Img_To_Buffer2
-* 功能描述：将图像转换成特征码存放在Buffer2中
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Put fingerprint image to buffer2
+   \brief 将图像转换成特征码存放在缓冲区2中
+   \return -1:Failed.收包失败
+            0:Succeeded.成功
+            1:Pack error.收包有误
+            6:Bad image.图像太乱
+            7:Few features.特征点过少
+            15:No image in buffer.没有图像
 */
-bool CTB_R308::Cmd_Img_To_Buffer2() {
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Img_To_Buffer2[0], 7);
+short R308::cmdToBuffer2() {
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packToBuffer2[0], 7);
   delay(500);
-  return SerialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：Cmd_Reg_Model
-* 功能描述：将BUFFER1 跟 BUFFER2 中的特征码合并成指纹模版
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Merge buffers and generate model.
+   \brief 将缓冲区中的特征码合并成指纹模版
+   \return -1:Failed.收包失败
+            0:Succeeded.成功
+            1:Pack error.收包有误
+            A:Merge error:Not same finger.合并错误:非同一手指
 */
-bool CTB_R308::Cmd_Reg_Model() {
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Reg_Model[0], 6);
+short R308::cmdRegModel() {
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packRegModel[0], 6);
   delay(50);
-  return SerialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：Cmd_Save_Finger
-* 功能描述：将BUFFER1中的特征码存放到指定的位置
-* 输入参数：指纹ID
-* 返 回 值：true/false
+/*!
+   \brief Delete all models.
+   \brief 删除指纹模块里的所有指纹模版
+   \return -1:Failed.收包失败
+            0:Succeeded.成功
+            1:Pack error.收包有误
+            11:Empty failed.清空失败
 */
-bool CTB_R308::Cmd_Save_Finger(unsigned int ID_temp) {
-  volatile unsigned int Sum_temp = 0;
-
-  FP_Save_Finger[5] = (ID_temp & 0xFF00) >> 8;
-  FP_Save_Finger[6] = (ID_temp & 0x00FF);
-
-  for (int i = 0; i < 7; i++)
-    Sum_temp = Sum_temp + FP_Save_Finger[i];
-
-  FP_Save_Finger[7] = (Sum_temp & 0xFF00) >> 8;
-  FP_Save_Finger[8] = Sum_temp & 0x00FF;
-
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Save_Finger[0], 9);
-  delay(100);
-  return SerialRead();
-}
-
-/**
-* 函 数 名：Cmd_Delete_All_Model
-* 功能描述：删除指纹模块里的所有指纹模版
-* 输入参数：无
-* 返 回 值：true/false
-*/
-bool CTB_R308::Cmd_Delete_All_Model() {
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Delet_All_Model[0], 6);
+short R308::cmdEmpty() {
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packEmpty[0], 6);
   delay(1000);
-  return SerialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：Cmd_Delete_Model
-* 功能描述：删除指纹模块里的指定指纹模版
-* 输入参数：指纹ID
-* 返 回 值：true/false
+/*!
+   \brief Save fingerprint from buffer to page.
+   \brief 将缓冲区中的特征码存放到指定的位置
+   \param bufferID(缓冲区号),pageID(指纹库位置)
+   \return -1:Failed.收包失败
+            0:Succeeded.成功
+            1:Pack error.收包有误
+            B:PageID out of range.超出指纹库范围
+            18:Flash error.写Flash出错
 */
-bool CTB_R308::Cmd_Delete_Model(unsigned int ID_temp) {
-  volatile unsigned int Sum_temp = 0;
+short R308::cmdSaveFinger(unsigned short bufferID, unsigned short pageID) {
+  volatile unsigned int Sum = 0;
 
-  FP_Delete_Model[4] = (ID_temp & 0xFF00) >> 8;
-  FP_Delete_Model[5] = (ID_temp & 0x00FF);
+  packSaveFinger[4] = bufferID;
+  packSaveFinger[5] = (pageID & 0xFF00) >> 8;
+  packSaveFinger[6] = pageID & 0x00FF;
 
-  for (int i = 0; i < 8; i++)
-    Sum_temp = Sum_temp + FP_Delete_Model[i];
+  for (short i = 0; i < 7; i++)
+    Sum += packSaveFinger[i];
 
-  FP_Delete_Model[8] = (Sum_temp & 0xFF00) >> 8;
-  FP_Delete_Model[9] = Sum_temp & 0x00FF;
+  packSaveFinger[7] = (Sum & 0xFF00) >> 8;
+  packSaveFinger[8] = Sum & 0x00FF;
 
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Delete_Model[0], 10);
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packSaveFinger[0], 9);
   delay(100);
-  return SerialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：Cmd_Search_Finger
-* 功能描述：搜索全部用户
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Search fingerprint among pages.
+   \brief 从指纹库中搜索指纹
+   \param bufferID(缓冲区号),startPageID(指纹库起始页),pageNum(页数)
+   \return -1:Failed.收包失败
+            0:Finished.搜索完成
+            1:Pack error.收包有误
+            9:Nothing matched.未搜索到
 */
-bool CTB_R308::Cmd_Search_Finger() {
-  SerialClean();
-  Serial.write(&FP_Pack_Head[0], 6);
-  Serial.write(&FP_Search[0], 11);
+short R308::cmdSearch(unsigned short bufferID, unsigned short startPageID,
+                      unsigned short pageNum) {
+  volatile unsigned int Sum = 0;
+
+  packSearch[4] = bufferID;
+  packSearch[5] = (startPageID & 0xFF00) >> 8;
+  packSearch[6] = (startPageID & 0x00FF);
+  packSearch[7] = (pageNum & 0xFF00) >> 8;
+  packSearch[8] = pageNum & 0x00FF;
+
+  for (short i = 0; i < 9; i++)
+    Sum += packSearch[i];
+
+  packSearch[9] = (Sum & 0xFF00) >> 8;
+  packSearch[10] = Sum & 0x00FF;
+
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packSearch[0], 11);
   delay(100);
-  return SerialRead();
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
 }
 
-/**
-* 函 数 名：SerialClean
-* 功能描述：清空串口缓存
-* 输入参数：无
-* 返 回 值：无
+/*!
+   \brief Delete models.
+   \brief 删除指纹模块里的指定指纹模版
+   \param startPageID(指纹库起始页),pageNum(页数)
+   \return -1:Failed.收包失败
+            0:Succeeded.成功
+            1:Pack error.收包有误
+            10:Delete failed.删除失败
 */
-void CTB_R308::SerialClean() {
-  for (int i = 0; i < 10; i++) {
-    FP_SerialRead[i] = 0xFF;
+short R308::cmdDeleteModel(unsigned short startPageID, unsigned short pageNum) {
+  volatile unsigned int Sum = 0;
+
+  packDeleteModel[4] = (startPageID & 0xFF00) >> 8;
+  packDeleteModel[5] = startPageID & 0x00FF;
+  packDeleteModel[6] = (pageNum & 0xFF00) >> 8;
+  packDeleteModel[7] = pageNum & 0x00FF;
+
+  for (short i = 0; i < 8; i++)
+    Sum += packDeleteModel[i];
+
+  packDeleteModel[8] = (Sum & 0xFF00) >> 8;
+  packDeleteModel[9] = Sum & 0x00FF;
+
+  serialClean();
+  Serial.write(&packHead[0], 6);
+  Serial.write(&packDeleteModel[0], 10);
+  delay(100);
+  if (serialRead() == true)
+    return packSerialRead[2];
+  else
+    return -1;
+}
+
+/*!
+   \brief Clean serial port cache.
+   \brief 清空串口缓存
+*/
+void R308::serialClean() {
+  for (short i = 0; i < 10; i++) {
+    packSerialRead[i] = 0xFF;
   }
   while (Serial.read() >= 0) {
   }
 }
 
-/**
-* 函 数 名：SerialRead
-* 功能描述：进行串口返回读取
-* 输入参数：无
-* 返 回 值：成功true/不成功false
+/*!
+   \brief Read data from serial port.
+   \brief 从串口读取数据
+   \return TRUE/FALSE (Finished完成/Failed失败)
 */
-bool CTB_R308::SerialRead() {
-  //等待应答
-  while (Serial.available() <= 0) {
+bool R308::serialRead() {
+
+  // Wait for data stream.等待数据流
+  long timeStart = millis();
+  while (Serial.available() <= 0 && millis() - timeStart >= 0 &&
+         millis() - timeStart < 3000) {
   }
-  //验证模块地址和应答包
+
+  // Verify pack head & sign.校验包头与标识
   if (Serial.read() == 0xEF && Serial.read() == 0x01) {
-    for (int i = 0; i < 4; i++) {
-      if (Serial.read() != FP_Pack_Head[i + 2])
+    for (short i = 0; i < 4; i++) {
+      if (Serial.read() != packHead[i + 2])
         return false;
     }
     if (Serial.read() != 0x07)
       return false;
   } else
     return false;
-  //接收包
-  Serial.read(); //去除空字节
-  FP_SerialRead[0] = Serial.read();
-  for (int i = 1; i <= FP_SerialRead[0]; i++)
-    FP_SerialRead[i] = Serial.read();
+
+  // Receive pack.接收包
+  packSerialRead[0] = ((Serial.read() << 8) | Serial.read());
+  for (short i = 1; i <= packSerialRead[0]; i++)
+    packSerialRead[i] = Serial.read();
   return true;
 }

@@ -4,26 +4,22 @@
 * Created by Jason C.H Feb 2017
 */
 
-#include "Config.h"
 #include "buzzer.h"
-
-#ifdef USE_DISPLAY
-#include "display.h"
-#endif
+#include "config.h"
 
 // Initialize Auth Module
 //初始化认证模块
 #ifdef USE_RC522
-#include "Link_rc522.h"
+#include "link_rc522.h"
 RC522 Rfid;
 extern class RFID Rc522;
 #endif
 
 #ifdef USE_R308
-#include "Link_r308.h"
+#include "link_r308.h"
 #include <CTB_R308.h>
-R308 FP;
-extern class CTB_R308 r308;
+LR308 FP;
+extern class R308_act r308;
 #endif
 
 // Initialize buzzer
