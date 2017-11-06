@@ -38,7 +38,7 @@ void open() {
 // Setup Mode
 //设定模式
 void setupMode() {
-  Buzzer.setupMode();
+// Buzzer.setupMode();
 
 #ifdef USE_R308
   FP.setupMode();
