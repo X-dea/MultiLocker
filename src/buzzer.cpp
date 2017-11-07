@@ -11,19 +11,21 @@
 #include "buzzer.h"
 #include "config.h"
 
-unsigned short buzzer::startNote[] = {M3, M4, M5, M6};
-unsigned short buzzer::openNote[] = {H3};
+uint16_t buzzer::startNote[] = {M3, M4, M5, M6};
+uint16_t buzzer::openNote[] = {H3};
 
 buzzer::buzzer() { pinMode(PIN_BUZZER, OUTPUT); }
 
-// Buzzer when start
 void buzzer::start() { playNote(startNote, 4); }
-
-// Buzzer when open
 void buzzer::open() { playNote(openNote, 1); }
 
-void buzzer::playNote(unsigned short note[], unsigned short noteLength) {
-  for (uint8_t i = 0; i <= noteLength; i++) {
+/*!
+   \brief Play note.
+   \brief 播放音符
+   \param uint16_t* note(音符)/uint16_t noteLength(长度)
+*/
+void buzzer::playNote(uint16_t *note, uint16_t noteLength) {
+  for (uint16_t i = 0; i <= noteLength; i++) {
     tone(PIN_BUZZER, note[i]);
     delay(120);
     noTone(PIN_BUZZER);

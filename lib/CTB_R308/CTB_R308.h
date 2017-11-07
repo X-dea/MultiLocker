@@ -15,42 +15,42 @@
 
 class R308 {
 private:
-  static unsigned char packHead[6];
-  static unsigned char packInit[10];
-  static unsigned char packGetImg[6];
-  static unsigned char packToBuffer1[7];
-  static unsigned char packToBuffer2[7];
-  static unsigned char packRegModel[6];
-  static unsigned char packEmpty[6];
+  static uint8_t packHead[6];
+  static uint8_t packInit[10];
+  static uint8_t packGetImg[6];
+  static uint8_t packToBuffer1[7];
+  static uint8_t packToBuffer2[7];
+  static uint8_t packRegModel[6];
+  static uint8_t packEmpty[6];
 
   /*!
     Save fingerprint from buffer to page.从指定缓冲区保存指纹
     sign  | length | command | bufferID | pageID | sum
     1byte | 2byte  | 1byte   | 1byte    | 2byte  | 2byte
   */
-  unsigned char packSaveFinger[9] = {0x01, 0x00, 0x06, 0x06, 0x01,
-                                     0x00, 0x02, 0x0,  0x0};
+  uint8_t packSaveFinger[9] = {0x01, 0x00, 0x06, 0x06, 0x01,
+                               0x00, 0x02, 0x0,  0x0};
   /*!
     Search fingerprint among pages.从指纹库中搜索
     sign  | length | command | bufferID | start | num   | sum
     1byte | 2byte  | 1byte   | 1byte    | 2byte | 2byte | 2byte
   */
-  unsigned char packSearch[11] = {0x01, 0x0,  0x08, 0x04, 0x01, 0x0,
-                                  0x0,  0x01, 0xF4, 0x01, 0x03};
+  uint8_t packSearch[11] = {0x01, 0x0,  0x08, 0x04, 0x01, 0x0,
+                            0x0,  0x01, 0xF4, 0x01, 0x03};
 
   /*!
     Delete N fingerprints from a pageID.从指定pageID删除N个指纹
     sign  | length | command | pageID | N     | sum
     1byte | 2byte  | 1byte   | 2byte  | 2byte | 2byte
   */
-  unsigned char packDeleteModel[10] = {0x01, 0x00, 0x07, 0x0C, 0x0,
-                                       0x0,  0x0,  0x1,  0x0,  0x0};
+  uint8_t packDeleteModel[10] = {0x01, 0x00, 0x07, 0x0C, 0x0,
+                                 0x0,  0x0,  0x1,  0x0,  0x0};
 
   void serialClean();
   bool serialRead();
 
 public:
-  unsigned char packSerialRead[10]; ///<Origin retuens. 读取的返回数据
+  uint8_t packSerialRead[10]; ///<Origin retuens. 读取的返回数据
 
   R308();
   /*!
@@ -120,7 +120,7 @@ public:
               B:PageID out of range.超出指纹库范围
               18:Flash error.写Flash出错
   */
-  short cmdSaveFinger(unsigned short bufferID, unsigned short pageID);
+  short cmdSaveFinger(uint8_t bufferID, uint16_t pageID);
   /*!
      \brief Search fingerprint among pages.
      \brief 从指纹库中搜索指纹
@@ -130,8 +130,7 @@ public:
               1:Pack error.收包有误
               9:Nothing matched.未搜索到
   */
-  short cmdSearch(unsigned short bufferID, unsigned short startPageID,
-                  unsigned short pageNum);
+  short cmdSearch(uint8_t bufferID, uint16_t startPageID, uint16_t pageNum);
   /*!
      \brief Delete models.
      \brief 删除指纹模块里的指定指纹模版
@@ -141,13 +140,18 @@ public:
               1:Pack error.收包有误
               10:Delete failed.删除失败
   */
-  short cmdDeleteModel(unsigned short startPageID, unsigned short pageNum);
+  short cmdDeleteModel(uint16_t startPageID, uint16_t pageNum);
 };
 
 class R308_act : public R308 {
 public:
   R308_act();
-
-  bool actRecordFinger(unsigned short bufferID, unsigned short pageID);
+  /*!
+     \brief Record fingerprint automatically.
+     \brief 自动录制指纹
+     \param PageID(指纹库位置)
+     \return true(成功)/false(失败)
+  */
+  bool actRecordFinger(uint16_t pageID);
 };
 #endif

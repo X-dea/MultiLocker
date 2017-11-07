@@ -10,14 +10,14 @@
 
 #include <CTB_R308.h>
 
-unsigned char R308::packHead[6] = {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF};
-unsigned char R308::packInit[10] = {0x01, 0x00, 0x07, 0x13, 0x00,
-                                    0x00, 0x00, 0x00, 0x00, 0x1B};
-unsigned char R308::packGetImg[6] = {0x01, 0x00, 0x03, 0x01, 0x0, 0x05};
-unsigned char R308::packToBuffer1[7] = {0x01, 0x0, 0x04, 0x02, 0x01, 0x0, 0x08};
-unsigned char R308::packToBuffer2[7] = {0x01, 0x0, 0x04, 0x02, 0x02, 0x0, 0x09};
-unsigned char R308::packRegModel[6] = {0x01, 0x0, 0x03, 0x05, 0x0, 0x09};
-unsigned char R308::packEmpty[6] = {0x01, 0x0, 0x03, 0x0d, 0x00, 0x11};
+uint8_t R308::packHead[6] = {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF};
+uint8_t R308::packInit[10] = {0x01, 0x00, 0x07, 0x13, 0x00,
+                              0x00, 0x00, 0x00, 0x00, 0x1B};
+uint8_t R308::packGetImg[6] = {0x01, 0x00, 0x03, 0x01, 0x0, 0x05};
+uint8_t R308::packToBuffer1[7] = {0x01, 0x0, 0x04, 0x02, 0x01, 0x0, 0x08};
+uint8_t R308::packToBuffer2[7] = {0x01, 0x0, 0x04, 0x02, 0x02, 0x0, 0x09};
+uint8_t R308::packRegModel[6] = {0x01, 0x0, 0x03, 0x05, 0x0, 0x09};
+uint8_t R308::packEmpty[6] = {0x01, 0x0, 0x03, 0x0d, 0x00, 0x11};
 
 R308::R308() {}
 
@@ -145,7 +145,7 @@ short R308::cmdEmpty() {
             B:PageID out of range.超出指纹库范围
             18:Flash error.写Flash出错
 */
-short R308::cmdSaveFinger(unsigned short bufferID, unsigned short pageID) {
+short R308::cmdSaveFinger(uint8_t bufferID, uint16_t pageID) {
   volatile unsigned int Sum = 0;
 
   packSaveFinger[4] = bufferID;
@@ -177,8 +177,8 @@ short R308::cmdSaveFinger(unsigned short bufferID, unsigned short pageID) {
             1:Pack error.收包有误
             9:Nothing matched.未搜索到
 */
-short R308::cmdSearch(unsigned short bufferID, unsigned short startPageID,
-                      unsigned short pageNum) {
+short R308::cmdSearch(uint8_t bufferID, uint16_t startPageID,
+                      uint16_t pageNum) {
   volatile unsigned int Sum = 0;
 
   packSearch[4] = bufferID;
@@ -212,7 +212,7 @@ short R308::cmdSearch(unsigned short bufferID, unsigned short startPageID,
             1:Pack error.收包有误
             10:Delete failed.删除失败
 */
-short R308::cmdDeleteModel(unsigned short startPageID, unsigned short pageNum) {
+short R308::cmdDeleteModel(uint16_t startPageID, uint16_t pageNum) {
   volatile unsigned int Sum = 0;
 
   packDeleteModel[4] = (startPageID & 0xFF00) >> 8;

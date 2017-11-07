@@ -41,16 +41,20 @@
 
 class buzzer {
 private:
-  static unsigned short startNote[4];
-  static unsigned short openNote[1];
+  static uint16_t startNote[4];
+  static uint16_t openNote[1];
 
 public:
   buzzer();
 
   void start();
-  void setupMode();
   void open();
-  void playNote(unsigned short note[], unsigned short noteLength);
+  /*!
+     \brief Play note.
+     \brief 播放音符
+     \param uint16_t* note(音符)/uint16_t noteLength(长度)
+  */
+  void playNote(uint16_t *note, uint16_t noteLength);
 };
 
 #endif
