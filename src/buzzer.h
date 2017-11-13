@@ -42,13 +42,17 @@
 class buzzer {
 private:
   static uint16_t startNote[4];
-  static uint16_t openNote[1];
+  static uint16_t openNote[2];
+  static uint16_t closeNote[2];
+  static uint16_t pressNote[1];
 
 public:
   buzzer();
 
   void start();
   void open();
+  void close();
+  void press();
   /*!
      \brief Play note.
      \brief 播放音符

@@ -8,7 +8,7 @@
 #include "link_r308.h"
 #include <CTB_R308.h>
 
-R308 r308;
+R308_act r308;
 
 LR308::LR308() { Serial.begin(57600); };
 

@@ -12,12 +12,16 @@
 #include "config.h"
 
 uint16_t buzzer::startNote[] = {M3, M4, M5, M6};
-uint16_t buzzer::openNote[] = {H3};
+uint16_t buzzer::openNote[] = {H3, H4};
+uint16_t buzzer::closeNote[] = {H4, H3};
+uint16_t buzzer::pressNote[] = {H2};
 
 buzzer::buzzer() { pinMode(PIN_BUZZER, OUTPUT); }
 
 void buzzer::start() { playNote(startNote, 4); }
-void buzzer::open() { playNote(openNote, 1); }
+void buzzer::open() { playNote(openNote, 2); }
+void buzzer::close() { playNote(closeNote, 2); }
+void buzzer::press() { playNote(pressNote, 1); }
 
 /*!
    \brief Play note.

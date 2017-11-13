@@ -1,12 +1,15 @@
-/**
-* MultiLocker (GPLv3)
-* Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Feb. 2017
+/*!
+   \file link_rc522.cpp
+   \brief RC522 controller Support by CTBeta Team http://ctbeta.org/
+   \author Jason C.H
+   \date Feb. 2017
+
+   A controller of RC522.<br />
+   一个RC522_RFID控制器。
 */
 
-#include "Config.h"
-#include "Link_rc522.h"
-#include <RFID.h>
+#include "config.h"
+#include "link_rc522.h"
 
 #ifdef USE_LOCAL
 #include "local.h"
@@ -24,11 +27,10 @@ RC522::RC522() {
   Rc522.init();
 };
 
-/**
-* 函 数 名：findcard
-* 功能描述：寻卡并读取序列号
-* 输入参数：无
-* 返 回 值：读取序列号成功返回ture 失败返回false
+/*!
+   \brief Find ID Card.
+   \brief 寻找ID卡
+   \return 读取序列号成功返回ture 失败返回false
 */
 bool RC522::findCard() {
   Rc522.init();
