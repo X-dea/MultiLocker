@@ -38,11 +38,10 @@ bool RC522::findCard() {
   return Rc522.readCardSerial();
 }
 
-/**
-* 函 数 名：authid
-* 功能描述：认证卡ID
-* 输入参数：无
-* 返 回 值：成功返回ture 失败返回false
+/*!
+   \brief authid
+   \brief 认证卡ID
+   \return 成功返回ture 失败返回false
 */
 bool RC522::authId() {
   int temp = 0;
@@ -59,11 +58,10 @@ bool RC522::authId() {
   return false;
 }
 
-/**
-* 函 数 名：authkey
-* 功能描述：认证卡密钥
-* 输入参数：无
-* 返 回 值：成功返回ture 失败返回false
+/*!
+   \brief authkey
+   \brief 认证卡密钥
+   \return 成功返回ture 失败返回false
 */
 bool RC522::authKey() {
   int temp = 0;

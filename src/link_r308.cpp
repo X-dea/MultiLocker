@@ -12,19 +12,10 @@ R308_act r308;
 
 LR308::LR308() { Serial.begin(57600); };
 
-/**
-* 函 数 名：setupMode
-* 功能描述：设定模式
-* 输入参数：无
-* 返 回 值：无
-*/
-void LR308::setupMode() {}
-
-/**
-* 函 数 名：searchFinger
-* 功能描述：读取手指并搜索指纹库
-* 输入参数：无
-* 返 回 值：找到返回ture 未找到返回false
+/*!
+   \brief Search fingerprint among library.
+   \brief 读取手指并搜索指纹库
+   \return 成功返回ture 失败返回false
 */
 bool LR308::searchFinger() {
   r308.cmdGetImg();
