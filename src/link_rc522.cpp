@@ -15,7 +15,7 @@
 #include "local.h"
 #endif
 
-RFID Rc522(PIN_SS, PIN_RFID_RST);
+RFID rc522(PIN_SS, PIN_RFID_RST);
 unsigned char status;
 unsigned char str[MAX_LEN];
 unsigned char RC_size;
@@ -24,7 +24,7 @@ unsigned char serNum[5];
 
 RC522::RC522() {
   SPI.begin();
-  Rc522.init();
+  rc522.init();
 };
 
 /*!
@@ -33,9 +33,9 @@ RC522::RC522() {
    \return 读取序列号成功返回ture 失败返回false
 */
 bool RC522::findCard() {
-  Rc522.init();
-  Rc522.isCard();
-  return Rc522.readCardSerial();
+  rc522.init();
+  rc522.isCard();
+  return rc522.readCardSerial();
 }
 
 /*!
@@ -48,7 +48,7 @@ bool RC522::authId() {
   for (int a = 0; a <= local.maxidno - 1; a++) {
     temp = 0;
     for (int b = 0; b <= 4; b++) {
-      if (local.IDList[a][b] == Rc522.serNum[b])
+      if (local.IDList[a][b] == rc522.serNum[b])
         temp += 1;
     }
     if (temp == 5) {
@@ -66,12 +66,12 @@ bool RC522::authId() {
 bool RC522::authKey() {
   int temp = 0;
   blockAddr = 16;
-  status = Rc522.auth(PICC_AUTHENT1A, 19, local.sectorKey[blockAddr / 4],
-                      Rc522.serNum);
+  status = rc522.auth(PICC_AUTHENT1A, 19, local.sectorKey[blockAddr / 4],
+                      rc522.serNum);
   if (status == MI_OK) //认证区块
   {
     //读数据
-    if (Rc522.read(blockAddr, str) == MI_OK) {
+    if (rc522.read(blockAddr, str) == MI_OK) {
       for (int i = 0; i <= 15; i++) {
         if (str[i] == local.authKey[0][i])
           temp += 1;

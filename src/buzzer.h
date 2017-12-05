@@ -39,7 +39,7 @@
 #define H6 1755
 #define H7 1971
 
-class buzzer {
+class Buzzer {
 private:
   static uint16_t startNote[4];
   static uint16_t openNote[2];
@@ -47,7 +47,7 @@ private:
   static uint16_t pressNote[1];
 
 public:
-  buzzer();
+  Buzzer();
 
   void start();
   void open();

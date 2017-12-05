@@ -16,7 +16,7 @@
 #ifdef USE_RC522
 #include "link_rc522.h"
 RC522 Rfid;
-extern class RFID Rc522;
+extern class RFID rc522;
 #endif
 
 #ifdef USE_R308

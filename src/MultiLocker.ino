@@ -6,31 +6,25 @@
 */
 
 #include "MultiLocker.h"
+#include <U8x8lib.h>
 
 // Initialize buzzer
 //初始化蜂鸣器
-buzzer Buzzer;
+Buzzer buzzer;
 
 // Open Lock Function
 //开锁函数
 void open() {
-  Buzzer.open();
+  buzzer.open();
   digitalWrite(PIN_LOCK, HIGH);
   delay(2000);
   digitalWrite(PIN_LOCK, LOW);
+  buzzer.close();
 }
 
 // Setup Mode
 //设定模式
 void setupMode() {
-// Buzzer.setupMode();
-
-#ifdef USE_R308
-  FP.setupMode();
-#endif
-
-  for (;;) {
-  }
 }
 
 // Main
@@ -46,7 +40,7 @@ void setup() {
     }
   }
 
-  Buzzer.start();
+  buzzer.start();
 }
 
 void loop() {
