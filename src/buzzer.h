@@ -1,14 +1,19 @@
-/**
-* MultiLocker (GPLv3)
-* Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Feb 2017
+/*!
+   \file buzzer.h
+   \brief Buzzer controller
+   \author Jason C.H
+   \date Nov. 2016
+
+   A controller of buzzer.<br />
+   一个蜂鸣器控制器。
 */
 
 #ifndef BUZZER_H
 #define BUZZER_H
 
+#include <Arduino.h>
 
-//定义音调频率
+// Tune definition.定义音调
 #define D0 -1
 #define D1 262
 #define D2 293
@@ -34,20 +39,26 @@
 #define H6 1755
 #define H7 1971
 
-
-class buzzer {
+class Buzzer {
 private:
+  static uint16_t startNote[4];
+  static uint16_t openNote[2];
+  static uint16_t closeNote[2];
+  static uint16_t pressNote[1];
 
 public:
-
-  buzzer();
+  Buzzer();
 
   void start();
-  void setupMode();
   void open();
-
+  void close();
+  void press();
+  /*!
+     \brief Play note.
+     \brief 播放音符
+     \param uint16_t* note(音符)/uint16_t noteLength(长度)
+  */
+  void playNote(uint16_t *note, uint16_t noteLength);
 };
-
-
 
 #endif

@@ -13,8 +13,7 @@ private:
 
 public:
   LR308();
-  //~R308();
-  void setupMode();
+
   bool searchFinger();
 };
 

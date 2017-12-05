@@ -1,51 +1,30 @@
-/**
-* MultiLocker (GPLv3)
-* Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Feb 2017
+/*!
+   \file MultiLocker.ino
+   \brief A opensource lock framework based on Arduino.
+   \author Jason C.H
+   \date Feb. 2017
 */
 
-#include "buzzer.h"
-#include "config.h"
-
-// Initialize Auth Module
-//初始化认证模块
-#ifdef USE_RC522
-#include "link_rc522.h"
-RC522 Rfid;
-extern class RFID Rc522;
-#endif
-
-#ifdef USE_R308
-#include "link_r308.h"
-#include <CTB_R308.h>
-LR308 FP;
-extern class R308_act r308;
-#endif
+#include "MultiLocker.h"
+#include <U8x8lib.h>
 
 // Initialize buzzer
 //初始化蜂鸣器
-buzzer Buzzer;
+Buzzer buzzer;
 
 // Open Lock Function
 //开锁函数
 void open() {
-  Buzzer.open();
+  buzzer.open();
   digitalWrite(PIN_LOCK, HIGH);
   delay(2000);
   digitalWrite(PIN_LOCK, LOW);
+  buzzer.close();
 }
 
 // Setup Mode
 //设定模式
 void setupMode() {
-  Buzzer.setupMode();
-
-#ifdef USE_R308
-  FP.setupMode();
-#endif
-
-  for (;;) {
-  }
 }
 
 // Main
@@ -61,7 +40,7 @@ void setup() {
     }
   }
 
-  Buzzer.start();
+  buzzer.start();
 }
 
 void loop() {

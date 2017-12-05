@@ -1,47 +1,36 @@
-/**
-* MultiLocker (GPLv3)
-* Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Feb 2017
+/*!
+   \file buzzer.cpp
+   \brief Buzzer controller
+   \author Jason C.H
+   \date Nov. 2016
+
+   A controller of buzzer.<br />
+   一个蜂鸣器控制器。
 */
 
 #include "buzzer.h"
 #include "config.h"
-#include <Arduino.h>
 
-// TUNE DEFINITION
-//定义音调
-int startTune[] = {M3, M4, M5, M6};
-int setupModeTune[] = {M3, M4, M4, M4};
-int openTune[] = {H3};
+uint16_t Buzzer::startNote[] = {M3, M4, M5, M6};
+uint16_t Buzzer::openNote[] = {H3, H4};
+uint16_t Buzzer::closeNote[] = {H4, H3};
+uint16_t Buzzer::pressNote[] = {H2};
 
-buzzer::buzzer() { pinMode(PIN_BUZZER, OUTPUT); }
+Buzzer::Buzzer() { pinMode(PIN_BUZZER, OUTPUT); }
 
-// Buzzer when start
-void buzzer::start() {
-  int length = sizeof(startTune) / sizeof(startTune[0]);
-  for (int i = 0; i <= length; i++) {
-    tone(PIN_BUZZER, startTune[i]);
-    delay(120);
-    noTone(PIN_BUZZER);
-    delay(20);
-  }
-}
+void Buzzer::start() { playNote(startNote, 4); }
+void Buzzer::open() { playNote(openNote, 2); }
+void Buzzer::close() { playNote(closeNote, 2); }
+void Buzzer::press() { playNote(pressNote, 1); }
 
-void buzzer::setupMode() {
-  int length = sizeof(setupModeTune) / sizeof(setupModeTune[0]);
-  for (int i = 0; i <= length; i++) {
-    tone(PIN_BUZZER, setupModeTune[i]);
-    delay(120);
-    noTone(PIN_BUZZER);
-    delay(20);
-  }
-}
-
-// Buzzer when open
-void buzzer::open() {
-  int length = sizeof(openTune) / sizeof(openTune[0]);
-  for (int i = 0; i <= length; i++) {
-    tone(PIN_BUZZER, openTune[i]);
+/*!
+   \brief Play note.
+   \brief 播放音符
+   \param uint16_t* note(音符)/uint16_t noteLength(长度)
+*/
+void Buzzer::playNote(uint16_t *note, uint16_t noteLength) {
+  for (uint16_t i = 0; i <= noteLength; i++) {
+    tone(PIN_BUZZER, note[i]);
     delay(120);
     noTone(PIN_BUZZER);
     delay(20);
