@@ -2,14 +2,14 @@ MultiLocker is a opensource lock framework based on Arduino.
 MultiLocker是一个基于Arduino开发的（多功能）锁框架。
 
 Github Address  
-Github 项目地址：https://github.com/CTBeta/MultiLocker   
+Github 项目地址：[https://github.com/CTBeta/MultiLocker](https://github.com/CTBeta/MultiLocker)
 
 Tips: The Project is developed by PlatformIO IDE. If you want to build the code with Arduino IDE, please reset the path name and import libraries manually.  
 本项目使用PlatformIO IDE构建，如果你需要使用ArduinoIDE，请手动更改文件路径名称并导入库文件。
 
 Libraries used:  
 使用的库文件：  
-U8g2lib from @olikraus
+U8g2lib from [@olikraus](https://github.com/olikraus)
 
 Supported authentication method:  
 支持的认证方式：  
