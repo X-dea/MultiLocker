@@ -13,6 +13,12 @@
 
 #include <Arduino.h>
 
+/*!
+  Use Hardware Serial 0
+  使用硬件串口 0
+*/
+#define SerPort Serial
+
 class R308 {
 private:
   static uint8_t packHead[6];
@@ -50,9 +56,14 @@ private:
   bool serialRead();
 
 public:
-  uint8_t packSerialRead[10]; ///<Origin retuens. 读取的返回数据
+  uint8_t packSerialRead[10]; ///< Origin retuens. 读取的返回数据
 
-  R308();
+  /*!
+     \brief Constructor
+     \brief 构造函数
+     \param Serial rate
+  */
+  R308(unsigned long rate);
   /*!
      \brief Initialize module
      \brief 初始化函数库，对指纹模块进行握手验证
@@ -143,15 +154,4 @@ public:
   short cmdDeleteModel(uint16_t startPageID, uint16_t pageNum);
 };
 
-class R308_act : public R308 {
-public:
-  R308_act();
-  /*!
-     \brief Record fingerprint automatically.
-     \brief 自动录制指纹
-     \param PageID(指纹库位置)
-     \return true(成功)/false(失败)
-  */
-  bool actRecordFinger(uint16_t pageID);
-};
 #endif

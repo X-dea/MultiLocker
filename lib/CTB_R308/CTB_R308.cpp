@@ -19,7 +19,7 @@ uint8_t R308::packToBuffer2[7] = {0x01, 0x0, 0x04, 0x02, 0x02, 0x0, 0x09};
 uint8_t R308::packRegModel[6] = {0x01, 0x0, 0x03, 0x05, 0x0, 0x09};
 uint8_t R308::packEmpty[6] = {0x01, 0x0, 0x03, 0x0d, 0x00, 0x11};
 
-R308::R308() {}
+R308::R308(unsigned long rate) { SerPort.begin(rate); }
 
 /*!
    \brief Initialize module
@@ -27,10 +27,10 @@ R308::R308() {}
    \return true:Finished.完成
 */
 bool R308::init() {
-  Serial.begin(57600);
+  SerPort.begin(57600);
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packInit[0], 10);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packInit[0], 10);
   delay(10);
   return true;
 }
@@ -46,8 +46,8 @@ bool R308::init() {
 */
 short R308::cmdGetImg() {
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packGetImg[0], 6);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packGetImg[0], 6);
   delay(300);
   if (serialRead() == true)
     return packSerialRead[2];
@@ -67,8 +67,8 @@ short R308::cmdGetImg() {
 */
 short R308::cmdToBuffer1() {
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packToBuffer1[0], 7);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packToBuffer1[0], 7);
   delay(500);
   if (serialRead() == true)
     return packSerialRead[2];
@@ -88,8 +88,8 @@ short R308::cmdToBuffer1() {
 */
 short R308::cmdToBuffer2() {
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packToBuffer2[0], 7);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packToBuffer2[0], 7);
   delay(500);
   if (serialRead() == true)
     return packSerialRead[2];
@@ -107,8 +107,8 @@ short R308::cmdToBuffer2() {
 */
 short R308::cmdRegModel() {
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packRegModel[0], 6);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packRegModel[0], 6);
   delay(50);
   if (serialRead() == true)
     return packSerialRead[2];
@@ -126,8 +126,8 @@ short R308::cmdRegModel() {
 */
 short R308::cmdEmpty() {
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packEmpty[0], 6);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packEmpty[0], 6);
   delay(1000);
   if (serialRead() == true)
     return packSerialRead[2];
@@ -159,8 +159,8 @@ short R308::cmdSaveFinger(uint8_t bufferID, uint16_t pageID) {
   packSaveFinger[8] = Sum & 0x00FF;
 
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packSaveFinger[0], 9);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packSaveFinger[0], 9);
   delay(100);
   if (serialRead() == true)
     return packSerialRead[2];
@@ -194,8 +194,8 @@ short R308::cmdSearch(uint8_t bufferID, uint16_t startPageID,
   packSearch[10] = Sum & 0x00FF;
 
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packSearch[0], 11);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packSearch[0], 11);
   delay(100);
   if (serialRead() == true)
     return packSerialRead[2];
@@ -227,8 +227,8 @@ short R308::cmdDeleteModel(uint16_t startPageID, uint16_t pageNum) {
   packDeleteModel[9] = Sum & 0x00FF;
 
   serialClean();
-  Serial.write(&packHead[0], 6);
-  Serial.write(&packDeleteModel[0], 10);
+  SerPort.write(&packHead[0], 6);
+  SerPort.write(&packDeleteModel[0], 10);
   delay(100);
   if (serialRead() == true)
     return packSerialRead[2];
@@ -244,7 +244,7 @@ void R308::serialClean() {
   for (short i = 0; i < 10; i++) {
     packSerialRead[i] = 0xFF;
   }
-  while (Serial.read() >= 0) {
+  while (SerPort.read() >= 0) {
   }
 }
 
@@ -257,24 +257,24 @@ bool R308::serialRead() {
 
   // Wait for data stream.等待数据流
   long timeStart = millis();
-  while (Serial.available() <= 0 && millis() - timeStart >= 0 &&
+  while (SerPort.available() <= 0 && millis() - timeStart >= 0 &&
          millis() - timeStart < 3000) {
   }
 
   // Verify pack head & sign.校验包头与标识
-  if (Serial.read() == 0xEF && Serial.read() == 0x01) {
+  if (SerPort.read() == 0xEF && SerPort.read() == 0x01) {
     for (short i = 0; i < 4; i++) {
-      if (Serial.read() != packHead[i + 2])
+      if (SerPort.read() != packHead[i + 2])
         return false;
     }
-    if (Serial.read() != 0x07)
+    if (SerPort.read() != 0x07)
       return false;
   } else
     return false;
 
   // Receive pack.接收包
-  packSerialRead[0] = ((Serial.read() << 8) | Serial.read());
+  packSerialRead[0] = ((SerPort.read() << 8) | SerPort.read());
   for (short i = 1; i <= packSerialRead[0]; i++)
-    packSerialRead[i] = Serial.read();
+    packSerialRead[i] = SerPort.read();
   return true;
 }
