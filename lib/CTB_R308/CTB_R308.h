@@ -80,7 +80,7 @@ public:
               2:No finger.传感器无手指
               3:Scan Failed.录入失败
   */
-  short cmdGetImg();
+  int8_t cmdGetImg();
   /*!
      \brief Put fingerprint image to buffer1
      \brief 将图像转换成特征码存放在缓冲区1中
@@ -91,7 +91,7 @@ public:
               7:Few features.特征点过少
               15:No image in buffer.没有图像
   */
-  short cmdToBuffer1();
+  int8_t cmdToBuffer1();
   /*!
      \brief Put fingerprint image to buffer2
      \brief 将图像转换成特征码存放在缓冲区2中
@@ -102,7 +102,7 @@ public:
               7:Few features.特征点过少
               15:No image in buffer.没有图像
   */
-  short cmdToBuffer2();
+  int8_t cmdToBuffer2();
   /*!
      \brief Merge buffers and generate model.
      \brief 将缓冲区中的特征码合并成指纹模版
@@ -111,7 +111,7 @@ public:
               1:Pack error.收包有误
               A:Merge error:Not same finger.合并错误:非同一手指
   */
-  short cmdRegModel();
+  int8_t cmdRegModel();
   /*!
      \brief Delete all models.
      \brief 删除指纹模块里的所有指纹模版
@@ -120,7 +120,7 @@ public:
               1:Pack error.收包有误
               11:Empty failed.清空失败
   */
-  short cmdEmpty();
+  int8_t cmdEmpty();
   /*!
      \brief Save fingerprint from buffer to page.
      \brief 将缓冲区中的特征码存放到指定的位置
@@ -131,7 +131,7 @@ public:
               B:PageID out of range.超出指纹库范围
               18:Flash error.写Flash出错
   */
-  short cmdSaveFinger(uint8_t bufferID, uint16_t pageID);
+  int8_t cmdSaveFinger(uint8_t bufferID, uint16_t pageID);
   /*!
      \brief Search fingerprint among pages.
      \brief 从指纹库中搜索指纹
@@ -141,7 +141,7 @@ public:
               1:Pack error.收包有误
               9:Nothing matched.未搜索到
   */
-  short cmdSearch(uint8_t bufferID, uint16_t startPageID, uint16_t pageNum);
+  int8_t cmdSearch(uint8_t bufferID, uint16_t startPageID, uint16_t pageNum);
   /*!
      \brief Delete models.
      \brief 删除指纹模块里的指定指纹模版
@@ -151,7 +151,7 @@ public:
               1:Pack error.收包有误
               10:Delete failed.删除失败
   */
-  short cmdDeleteModel(uint16_t startPageID, uint16_t pageNum);
+  int8_t cmdDeleteModel(uint16_t startPageID, uint16_t pageNum);
 };
 
 #endif
