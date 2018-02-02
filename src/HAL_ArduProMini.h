@@ -1,8 +1,8 @@
 /**
-* MultiLocker (GPLv3)
-* Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Feb 2017
-*/
+ * MultiLocker (GPLv3)
+ * Support by CTBeta Team http://ctbeta.org/
+ * Created by Jason C.H Feb 2017
+ */
 #ifndef HAL_ARDUPROMINI_H
 #define HAL_ARDUPROMINI_H
 
@@ -22,5 +22,8 @@
 #define PIN_RFID_RST 5 // RFID
 #define PIN_LOCK 9     // lOCK
 #define PIN_DETECT 4   // Detector
+
+// EEPROM
+#define EEPROM_SIZE 1000
 
 #endif
