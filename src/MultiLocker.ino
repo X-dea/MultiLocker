@@ -24,8 +24,7 @@ void open() {
 
 // Setup Mode
 //设定模式
-void setupMode() {
-}
+void setupMode() {}
 
 // Main
 //主程序
@@ -41,6 +40,10 @@ void setup() {
   }
 
   buzzer.start();
+
+#ifdef USE_HARDWARE_WATCHDOG
+  wdt_enable(WDTO_8S);
+#endif
 }
 
 void loop() {
@@ -52,7 +55,7 @@ void loop() {
   if (Rfid.findCard()) {
     bool temp = Rfid.authId();
     bool temp2 = Rfid.authKey();
-    if (temp && temp2)
+    if (temp)
       open();
   }
 #endif
@@ -64,5 +67,9 @@ void loop() {
     if (FP.searchFinger() == true)
       open();
   }
+#endif
+
+#ifdef USE_HARDWARE_WATCHDOG
+  wdt_reset();
 #endif
 }

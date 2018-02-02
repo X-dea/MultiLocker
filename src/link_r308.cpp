@@ -1,16 +1,16 @@
 /**
-* MultiLocker (GPLv3)
-* Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Feb. 2017
-*/
+ * MultiLocker (GPLv3)
+ * Support by CTBeta Team http://ctbeta.org/
+ * Created by Jason C.H Feb. 2017
+ */
 
 #include "config.h"
 #include "link_r308.h"
 #include <CTB_R308.h>
 
-R308_act r308;
+R308 r308(57600);
 
-LR308::LR308() { Serial.begin(57600); };
+LR308::LR308(){};
 
 /*!
    \brief Search fingerprint among library.
