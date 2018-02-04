@@ -27,7 +27,7 @@
  * AUTHTYPE DEFINITION
  * 定义启用的认证类型
  */
-//#define USE_RC522
+#define USE_RC522
 //#define USE_LB522
 #define USE_R308
 

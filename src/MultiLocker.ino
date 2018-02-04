@@ -6,7 +6,6 @@
 */
 
 #include "MultiLocker.h"
-#include <U8x8lib.h>
 
 // Initialize buzzer
 //初始化蜂鸣器
