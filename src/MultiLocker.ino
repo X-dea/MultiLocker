@@ -29,6 +29,7 @@ void setupMode() {}
 //主程序
 void setup() {
   pinMode(PIN_LOCK, OUTPUT);
+  pinMode(PIN_INBUTTON, INPUT);
 
   if (digitalRead(PIN_INBUTTON) == HIGH) {
     unsigned int timestart = millis();

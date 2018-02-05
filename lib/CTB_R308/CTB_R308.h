@@ -61,9 +61,9 @@ public:
   /*!
      \brief Constructor
      \brief 构造函数
-     \param Serial rate
+     \param
   */
-  R308(unsigned long rate);
+  R308();
   /*!
      \brief Initialize module
      \brief 初始化函数库，对指纹模块进行握手验证
