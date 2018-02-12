@@ -17,9 +17,9 @@
 
 /**
  * HARDWARE WATCHDOG
- * Warning: Only UNO's bootloader support watchdog!
  * 硬件看门狗
- * 警告：只有 UNO 的 bootloader 支持硬件看门狗！
+ * Warning: You may need to reburn bootloader to support this function.
+ * 警告：您可能需要重新烧写引导程序以支持本功能。
  */
 #define USE_HARDWARE_WATCHDOG
 
