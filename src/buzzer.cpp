@@ -3,9 +3,6 @@
    \brief Buzzer controller
    \author Jason C.H
    \date Nov. 2016
-
-   A controller of buzzer.<br />
-   一个蜂鸣器控制器。
 */
 
 #include "buzzer.h"
@@ -29,7 +26,7 @@ void Buzzer::press() { playNote(pressNote, 1); }
    \param uint16_t* note(音符)/uint16_t noteLength(长度)
 */
 void Buzzer::playNote(uint16_t *note, uint16_t noteLength) {
-  for (uint16_t i = 0; i <= noteLength; i++) {
+  for (uint16_t i = 0; i <= noteLength - 1; i++) {
     tone(PIN_BUZZER, note[i]);
     delay(120);
     noTone(PIN_BUZZER);

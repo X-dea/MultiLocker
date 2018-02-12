@@ -1,8 +1,10 @@
-/**
-* MultiLocker (GPLv3)
-* Support by CTBeta Team http://ctbeta.org/
-* Created by Jason C.H Feb 2017
+/*!
+   \file HAL_ArduMega2560.h
+   \brief HAL for Arduino Mega 2560
+   \author Jason C.H
+   \date Feb. 2017
 */
+
 #ifndef HAL_ARDUMEGA2560_H
 #define HAL_ARDUMEGA2560_H
 
@@ -22,5 +24,8 @@
 #define PIN_RFID_RST 5 // RFID
 #define PIN_LOCK 9     // lOCK
 #define PIN_DETECT 4   // Detector
+
+// EEPROM
+#define EEPROM_SIZE 4000
 
 #endif
