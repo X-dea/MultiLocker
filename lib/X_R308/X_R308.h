@@ -1,10 +1,10 @@
 /*!
-   \file CTB_R308.h
-   \brief CTBeta R308 Library (GPLv3) Support by CTBeta Team http://ctbeta.org/
+   \file X_R308.h
+   \brief R308 Library (GPLv3) Support by Xdea http://xdea.xyz/
    \author Jason C.H
    \date Nov. 2016
 
-   A library for R308 fingerprint module.<br />
+   A library for R308 fingerprint module.\n
    一个R308指纹模块库。
 */
 

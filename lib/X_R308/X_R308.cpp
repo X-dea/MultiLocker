@@ -1,6 +1,6 @@
 /*!
-   \file CTB_R308.cpp
-   \brief CTBeta R308 Library (GPLv3) Support by CTBeta Team http://ctbeta.org/
+   \file X_R308.cpp
+   \brief R308 Library (GPLv3) Support by Xdea http://xdea.xyz/
    \author Jason C.H
    \date Nov. 2016
 
@@ -8,7 +8,7 @@
    一个R308指纹模块库。
 */
 
-#include <CTB_R308.h>
+#include <X_R308.h>
 
 uint8_t R308::packHead[6] = {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF};
 uint8_t R308::packInit[10] = {0x01, 0x00, 0x07, 0x13, 0x00,

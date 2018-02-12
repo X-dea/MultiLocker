@@ -1,11 +1,8 @@
 /*!
    \file link_rc522.h
-   \brief RC522 controller Support by CTBeta Team http://ctbeta.org/
+   \brief Linker for RC522 Module
    \author Jason C.H
    \date Feb. 2017
-
-   A controller of RC522.<br />
-   一个RC522_RFID控制器。
 */
 
 #ifndef LINK_RC522_H

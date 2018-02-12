@@ -1,12 +1,13 @@
-/**
- * MultiLocker (GPLv3)
- * Support by CTBeta Team http://ctbeta.org/
- * Created by Jason C.H Feb. 2017
- */
+/*!
+   \file link_r308.cpp
+   \brief Linker for R308 Module
+   \author Jason C.H
+   \date Feb. 2018
+*/
 
 #include "config.h"
 #include "link_r308.h"
-#include <CTB_R308.h>
+#include <X_R308.h>
 
 R308 r308;
 

@@ -8,11 +8,11 @@
 #include "MultiLocker.h"
 
 // Initialize buzzer
-//初始化蜂鸣器
+// 初始化蜂鸣器
 Buzzer buzzer;
 
 // Open Lock Function
-//开锁函数
+// 开锁函数
 void open() {
   buzzer.open();
   digitalWrite(PIN_LOCK, HIGH);
@@ -22,11 +22,11 @@ void open() {
 }
 
 // Setup Mode
-//设定模式
+// 设定模式
 void setupMode() {}
 
 // Main
-//主程序
+// 主程序
 void setup() {
   pinMode(PIN_LOCK, OUTPUT);
   pinMode(PIN_INBUTTON, INPUT);

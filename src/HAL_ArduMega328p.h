@@ -1,10 +1,12 @@
-/**
- * MultiLocker (GPLv3)
- * Support by CTBeta Team http://ctbeta.org/
- * Created by Jason C.H Feb 2017
- */
-#ifndef HAL_ARDUPROMINI_H
-#define HAL_ARDUPROMINI_H
+/*!
+   \file HAL_ArduMega328p.h
+   \brief HAL for Arduino Atmega328p based board
+   \author Jason C.H
+   \date Feb. 2017
+*/
+
+#ifndef HAL_ARDUMEGA328P_H
+#define HAL_ARDUMEGA328P_H
 
 // I2C PORT
 #define PIN_SDA 4

@@ -12,7 +12,7 @@
  * HAL DEFINITION
  * 硬件层定义
  */
-#include "HAL_ArduProMini.h"
+#include "HAL_ArduMega328p.h"
 //#include "HAL_ArduMega2560.h"
 
 /**
@@ -27,7 +27,7 @@
  * AUTHTYPE DEFINITION
  * 定义启用的认证类型
  */
-// #define USE_RC522
+#define USE_RC522
 //#define USE_LB522
 #define USE_R308
 
@@ -50,16 +50,6 @@
  */
 #ifdef USE_DISPLAY
 #define DISPLAY_TYPE U8GLIB_SSD1306_128X64
-#endif
-
-// MYSQL DEFINITION
-// 启用MYSQL数据库(仅在网络存储启用时可定义)
-//#define USE_MYSQL
-#ifdef USE_MYSQL
-#define MYSQL_ADDRESS MYADDRESS
-#define MYSQL_DATABASE MultiLockers
-#define MYSQL_PASSWOED MYPASSWORFD
-#define MYSQL_TABLE MultiLockers
 #endif
 
 #endif
