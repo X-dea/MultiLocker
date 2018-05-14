@@ -31,4 +31,6 @@
 .clang_complete
 .gcc-flags.json
 
+.vscode/
+
 /src/local.h
