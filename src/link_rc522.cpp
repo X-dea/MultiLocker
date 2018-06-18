@@ -5,8 +5,8 @@
    \date Feb. 2017
 */
 
-#include "config.h"
 #include "link_rc522.h"
+#include "config.h"
 
 #ifdef USE_LOCAL
 #include "local.h"
@@ -79,4 +79,5 @@ bool RC522::authKey() {
         return false;
     }
   }
+  return false;
 }

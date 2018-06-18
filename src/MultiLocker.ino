@@ -47,7 +47,6 @@ void setup() {
 }
 
 void loop() {
-
   if (digitalRead(PIN_INBUTTON) == HIGH)
     open();
 
@@ -64,7 +63,7 @@ void loop() {
   if (digitalRead(PIN_DETECT) == LOW) {
     delay(300);
     r308.init();
-    if (FP.searchFinger() == true)
+    if (FP.readAndSearch() == true)
       open();
   }
 #endif
