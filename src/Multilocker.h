@@ -10,7 +10,6 @@
 
 #include "buzzer.h"
 #include "config.h"
-#include <U8x8lib.h>
 
 // Hardware Watchdog
 #ifdef USE_HARDWARE_WATCHDOG
