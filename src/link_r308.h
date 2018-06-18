@@ -23,9 +23,38 @@
 #define kRoleMemberMin 101
 #define kRoleMemberMax 500
 
+/**
+ * Define latest fingerprint pointer for each role in EEPROM.
+ * 在EEPROM中定义存放各用户组最新成员的位置
+ * Warning: Latest fingerprint pointers will take 8 bytes [start,start+8) for 4
+ * groups in eeprom.
+ * 警告：EEPROM中用户组区块信息存储将会占用8字节
+ */
+#define kFingerprintPointerStart 1
+
 class R308Linker {
 private:
-  void saveFingerId(unsigned short pageID);
+  /**
+   * Locate user role.
+   * 确定用户组
+   * @return 1:root
+   *         2:second
+   *         3:leader
+   *         4:member
+   */
+  uint8_t locateUserRole(uint16_t pageID);
+
+  /**
+   * Read latest fingerprint location from EEPROM.
+   * 从EEPROM中读取最新指纹位置
+   */
+  uint16_t readFromEEPROM(uint8_t groupID);
+
+  /**
+   * Save latest fingerprint location to EEPROM.
+   * 在EEPROM中保存最新指纹位置
+   */
+  void saveToEEPROM(uint8_t groupID, uint16_t location);
 
 public:
   R308Linker();
@@ -39,14 +68,10 @@ public:
                          uint16_t pageNum);
 
   /**
-   * Locate user role.
-   * 确定用户组
-   * @return 1:root
-   *         2:second
-   *         3:leader
-   *         4:member
+   * Scan and save fingerprint to the corresponding group.
+   * 扫描并保存指纹到对应组
    */
-  uint8_t locateUserRole(uint16_t pageID);
+  bool readAndSave(uint8_t groupID);
 };
 
 #endif
