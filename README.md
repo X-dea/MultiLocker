@@ -1,3 +1,5 @@
+![Build Travis](https://www.travis-ci.org/X-dea/MultiLocker.svg?branch=master)
+
 MultiLocker is a opensource lock framework based on Arduino.  
 MultiLocker是一个基于Arduino开发的（多功能）锁框架。
 
