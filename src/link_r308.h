@@ -45,6 +45,13 @@ private:
   uint8_t locateUserRole(uint16_t pageID);
 
   /**
+   * Locate user range by group.
+   * 根据用户组确定指纹区间
+   */
+  uint16_t locateUserRangeMax(uint8_t groupID);
+  uint16_t locateUserRangeMin(uint8_t groupID);
+
+  /**
    * Read latest fingerprint location from EEPROM.
    * 从EEPROM中读取最新指纹位置
    */

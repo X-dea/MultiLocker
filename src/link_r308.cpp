@@ -74,6 +74,35 @@ uint8_t R308Linker::locateUserRole(uint16_t pageID) {
 }
 
 /**
+ * Locate user range by group.
+ * 根据用户组确定指纹区间
+ */
+uint16_t R308Linker::locateUserRangeMax(uint8_t groupID) {
+  switch (groupID) {
+  case 1:
+    return kRoleRootMax;
+  case 2:
+    return kRoleSecondMax;
+  case 3:
+    return kRoleLeaderMax;
+  default:
+    return kRoleMemberMax;
+  }
+}
+uint16_t R308Linker::locateUserRangeMin(uint8_t groupID) {
+  switch (groupID) {
+  case 4:
+    return kRoleMemberMin;
+  case 3:
+    return kRoleLeaderMin;
+  case 2:
+    return kRoleSecondMin;
+  default:
+    return kRoleRootMin;
+  }
+}
+
+/**
  * Read latest fingerprint location from EEPROM.
  * 从EEPROM中读取最新指纹位置
  */
