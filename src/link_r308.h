@@ -8,29 +8,8 @@
 #ifndef LINK_R308_H
 #define LINK_R308_H
 
+#include "config.h"
 #include <Arduino.h>
-
-/**
- * Define user roles.
- * 定义用户组区块
- */
-#define kRoleRootMin 1
-#define kRoleRootMax 10
-#define kRoleSecondMin 11
-#define kRoleSecondMax 30
-#define kRoleLeaderMin 31
-#define kRoleLeaderMax 100
-#define kRoleMemberMin 101
-#define kRoleMemberMax 500
-
-/**
- * Define latest fingerprint pointer for each role in EEPROM.
- * 在EEPROM中定义存放各用户组最新成员的位置
- * Warning: Latest fingerprint pointers will take 8 bytes [start,start+8) for 4
- * groups in eeprom.
- * 警告：EEPROM中用户组区块信息存储将会占用8字节
- */
-#define kFingerprintPointerStart 1
 
 class R308Linker {
 private:
