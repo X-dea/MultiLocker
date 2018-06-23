@@ -8,7 +8,6 @@
 #ifndef LINK_R308_H
 #define LINK_R308_H
 
-#include "config.h"
 #include <Arduino.h>
 
 class R308Linker {
