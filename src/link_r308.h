@@ -19,8 +19,9 @@ private:
    *         2:second
    *         3:leader
    *         4:member
+   *        -1:other
    */
-  uint8_t locateUserRole(uint16_t pageID);
+  int8_t locateUserRole(uint16_t pageID);
 
   /**
    * Locate user range by group.
@@ -45,12 +46,19 @@ public:
   R308Linker();
 
   /**
+   * Setup mode.
+   * 设置模式
+   */
+  void setupMode();
+
+  /**
    * Read from sensor and search fingerprint among library.
    * 读取手指并搜索指纹库
    */
   bool readAndSearch();
   uint16_t readAndSearch(uint8_t bufferID, uint16_t startPageID,
                          uint16_t pageNum);
+  uint16_t readAndSearch(uint8_t bufferID, uint8_t groupID);
 
   /**
    * Scan and save fingerprint to the corresponding group.

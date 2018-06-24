@@ -21,9 +21,18 @@ void open() {
   buzzer.close();
 }
 
-// Setup Mode
-// 设定模式
-void setupMode() {}
+/**
+ * Setup mode.
+ * 设定模式
+ */
+void setupMode() {
+  buzzer.setup();
+#ifdef USE_R308
+  FP.setupMode();
+#endif
+  for (;;) {
+  }
+}
 
 // Main
 // 主程序
@@ -31,13 +40,8 @@ void setup() {
   pinMode(PIN_LOCK, OUTPUT);
   pinMode(PIN_INBUTTON, INPUT);
 
-  if (digitalRead(PIN_INBUTTON) == HIGH) {
-    unsigned int timestart = millis();
-    while (digitalRead(PIN_INBUTTON) == HIGH) {
-      if ((millis() - timestart) >= 10000)
-        setupMode();
-    }
-  }
+  if (digitalRead(PIN_INBUTTON) == HIGH)
+    setupMode();
 
   buzzer.start();
 

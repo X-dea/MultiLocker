@@ -15,6 +15,24 @@ R308 r308;
 R308Linker::R308Linker(){};
 
 /**
+ * Setup mode.
+ * 设置模式
+ */
+void R308Linker::setupMode() {
+  while (digitalRead(PIN_DETECT) != LOW) {
+  }
+  delay(300);
+  r308.init();
+  int16_t location = readAndSearch(1, 1, 500);
+  int8_t role = locateUserRole(location);
+  if (location == -1 || role == -1 || role == 4)
+    return;
+  while (digitalRead(PIN_DETECT) != LOW) {
+  }
+  readAndSave(role + 1);
+}
+
+/**
  * Read from sensor and search fingerprint among library.
  * 读取手指并搜索指纹库
  */
@@ -29,6 +47,15 @@ uint16_t R308Linker::readAndSearch(uint8_t bufferID, uint16_t startPageID,
   r308.cmdGetImg();
   r308.cmdToBuffer1();
   r308.cmdSearch(bufferID, startPageID, pageNum);
+  if (r308.packSerialRead[1] != 0x0)
+    return -1;
+  return (r308.packSerialRead[2] << 8) | r308.packSerialRead[3];
+}
+uint16_t R308Linker::readAndSearch(uint8_t bufferID, uint8_t groupID) {
+  r308.cmdGetImg();
+  r308.cmdToBuffer1();
+  uint16_t startPage = locateUserRangeMin(groupID);
+  r308.cmdSearch(bufferID, startPage, locateUserRangeMax(groupID) - startPage);
   if (r308.packSerialRead[1] != 0x0)
     return -1;
   return (r308.packSerialRead[2] << 8) | r308.packSerialRead[3];
@@ -61,7 +88,7 @@ bool R308Linker::readAndSave(uint8_t groupID) {
  *         4:member
  *         -1: none
  */
-uint8_t R308Linker::locateUserRole(uint16_t pageID) {
+int8_t R308Linker::locateUserRole(uint16_t pageID) {
   if (pageID >= kRoleMemberMin && pageID <= kRoleMemberMax)
     return 4;
   if (pageID >= kRoleLeaderMin && pageID <= kRoleLeaderMax)
