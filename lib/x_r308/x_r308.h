@@ -13,21 +13,21 @@
 
 #include <Arduino.h>
 
-/*!
-  Use Hardware Serial 0
-  使用硬件串口 0
-*/
+/**
+ * Use Hardware Serial 0
+ * 使用硬件串口 0
+ */
 #define SerPort Serial
 
 class R308 {
 private:
-  static uint8_t packHead[6];
-  static uint8_t packInit[10];
-  static uint8_t packGetImg[6];
-  static uint8_t packToBuffer1[7];
-  static uint8_t packToBuffer2[7];
-  static uint8_t packRegModel[6];
-  static uint8_t packEmpty[6];
+  static const uint8_t packHead[6];
+  static const uint8_t packInit[10];
+  static const uint8_t packGetImg[6];
+  static const uint8_t packToBuffer1[7];
+  static const uint8_t packToBuffer2[7];
+  static const uint8_t packRegModel[6];
+  static const uint8_t packEmpty[6];
 
   /*!
     Save fingerprint from buffer to page.从指定缓冲区保存指纹
@@ -64,6 +64,7 @@ public:
      \param
   */
   R308();
+
   /*!
      \brief Initialize module
      \brief 初始化函数库，对指纹模块进行握手验证
@@ -81,6 +82,7 @@ public:
               3:Scan Failed.录入失败
   */
   int8_t cmdGetImg();
+
   /*!
      \brief Put fingerprint image to buffer1
      \brief 将图像转换成特征码存放在缓冲区1中
@@ -92,6 +94,7 @@ public:
               15:No image in buffer.没有图像
   */
   int8_t cmdToBuffer1();
+
   /*!
      \brief Put fingerprint image to buffer2
      \brief 将图像转换成特征码存放在缓冲区2中
@@ -103,6 +106,7 @@ public:
               15:No image in buffer.没有图像
   */
   int8_t cmdToBuffer2();
+
   /*!
      \brief Merge buffers and generate model.
      \brief 将缓冲区中的特征码合并成指纹模版
@@ -112,6 +116,7 @@ public:
               A:Merge error:Not same finger.合并错误:非同一手指
   */
   int8_t cmdRegModel();
+
   /*!
      \brief Delete all models.
      \brief 删除指纹模块里的所有指纹模版
@@ -121,6 +126,7 @@ public:
               11:Empty failed.清空失败
   */
   int8_t cmdEmpty();
+
   /*!
      \brief Save fingerprint from buffer to page.
      \brief 将缓冲区中的特征码存放到指定的位置
@@ -132,6 +138,7 @@ public:
               18:Flash error.写Flash出错
   */
   int8_t cmdSaveFinger(uint8_t bufferID, uint16_t pageID);
+
   /*!
      \brief Search fingerprint among pages.
      \brief 从指纹库中搜索指纹
@@ -142,6 +149,7 @@ public:
               9:Nothing matched.未搜索到
   */
   int8_t cmdSearch(uint8_t bufferID, uint16_t startPageID, uint16_t pageNum);
+
   /*!
      \brief Delete models.
      \brief 删除指纹模块里的指定指纹模版

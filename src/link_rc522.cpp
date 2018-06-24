@@ -5,11 +5,13 @@
    \date Feb. 2017
 */
 
-#include "config.h"
 #include "link_rc522.h"
+#include "config.h"
 
 #ifdef USE_LOCAL
 #include "local.h"
+#else
+#include "local.sample.h"
 #endif
 
 RFID rc522(PIN_SS, PIN_RFID_RST);
@@ -79,4 +81,5 @@ bool RC522::authKey() {
         return false;
     }
   }
+  return false;
 }

@@ -41,10 +41,11 @@
 
 class Buzzer {
 private:
-  static uint16_t startNote[4];
-  static uint16_t openNote[2];
-  static uint16_t closeNote[2];
-  static uint16_t pressNote[1];
+  static const uint16_t startNote[4];
+  static const uint16_t openNote[2];
+  static const uint16_t closeNote[2];
+  static const uint16_t pressNote[1];
+  static const uint16_t setupNote[4];
 
 public:
   Buzzer();
@@ -52,13 +53,13 @@ public:
   void start();
   void open();
   void close();
-  void press();
+  void setup();
   /*!
      \brief Play note.
      \brief 播放音符
      \param uint16_t* note(音符)/uint16_t noteLength(长度)
   */
-  void playNote(uint16_t *note, uint16_t noteLength);
+  void playNote(const uint16_t *note, uint16_t noteLength);
 };
 
 #endif
