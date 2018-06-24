@@ -133,7 +133,7 @@ uint16_t R308Linker::locateUserRangeMin(uint8_t groupID) {
  * Read latest fingerprint location from EEPROM.
  * 从EEPROM中读取最新指纹位置
  */
-uint16_t readFromEEPROM(uint8_t groupID) {
+uint16_t R308Linker::readFromEEPROM(uint8_t groupID) {
   uint16_t fingerprintPointer = kFingerprintPointerStart + 2 * (groupID - 1);
   return (EEPROM.read(fingerprintPointer) << 8) |
          EEPROM.read(fingerprintPointer + 1);
@@ -143,7 +143,7 @@ uint16_t readFromEEPROM(uint8_t groupID) {
  * Save latest fingerprint location to EEPROM.
  * 在EEPROM中保存最新指纹位置
  */
-void saveToEEPROM(uint8_t groupID, uint16_t location) {
+void R308Linker::saveToEEPROM(uint8_t groupID, uint16_t location) {
   uint16_t fingerprintPointer = kFingerprintPointerStart + 2 * (groupID - 1);
   EEPROM.write(fingerprintPointer, location >> 8);
   EEPROM.write(fingerprintPointer + 1, location & 0x00FF);
