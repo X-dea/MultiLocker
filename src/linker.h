@@ -16,8 +16,6 @@
 
 class Linker {
 public:
-  virtual ~Linker();
-
   /**
    * @brief Get user from modules and return
    * @brief 从模块获取用户并返回

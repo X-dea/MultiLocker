@@ -5,13 +5,14 @@
  * @author Jason C.H
  * @date 2018-09-01
  */
+
 #ifndef USER_H
 #define USER_H
 
 #include "config.h"
 #include <Arduino.h>
 
-enum UserRole { kAllRole, kRootRole, kSecond, kThirdRole, kFourthRole };
+enum UserRole { kAllRole, kRootRole, kSecondRole, kThirdRole, kFourthRole };
 
 class User {
 public:
