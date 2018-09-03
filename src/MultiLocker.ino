@@ -67,7 +67,7 @@ void loop() {
   if (digitalRead(PIN_DETECT) == LOW) {
     delay(300);
     r308.init();
-    if (FP.readAndSearch() == true)
+    if (FP.auth(kAllRole) == true)
       open();
   }
 #endif

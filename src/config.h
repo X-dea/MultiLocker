@@ -8,9 +8,28 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+/********************
+ * Compile configuration
+ * 编译设定
+ */
+
 /**
- * HAL DEFINITION
- * 硬件层定义
+ * Debug mode
+ * 调试模式
+ * This mode will print extra debug informations to the debug serial port
+ * 这一模式将在调试串口输出额外的调试信息
+ */
+#define ENABLE_DEBUG_MODE
+#define debugSerPort Serial
+
+/********************
+ * Compile configuration
+ * 编译设定
+ */
+
+/**
+ * IO definition
+ * 硬件接口定义
  */
 // #include "HAL_ArduMega328p.h"
 #include "HAL_ArduMega2560.h"
@@ -37,23 +56,23 @@
  */
 // #define USE_LOCAL
 
-/**
- * Configurations for R308 fingerprint module.
+/********************
+ * Configurations for R308 fingerprint module
  * R308指纹模块相关设置
  */
 
 /**
- * Define user roles.
- * 定义用户组区块
+ * Define location range of roles
+ * 定义用户组区块位置
  */
 #define kRoleRootMin 1
 #define kRoleRootMax 10
 #define kRoleSecondMin 11
 #define kRoleSecondMax 30
-#define kRoleLeaderMin 31
-#define kRoleLeaderMax 100
-#define kRoleMemberMin 101
-#define kRoleMemberMax 500
+#define kRoleThirdMin 31
+#define kRoleThirdMax 100
+#define kRoleFourthMin 101
+#define kRoleFourthMax 500
 
 /**
  * Define latest fingerprint pointer for each role in EEPROM.
