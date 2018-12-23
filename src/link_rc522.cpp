@@ -14,7 +14,7 @@
 #include "local.sample.h"
 #endif
 
-RFID rc522(PIN_SS, PIN_RFID_RST);
+RFID rc522(PIN_SS, PIN_RC522_RST);
 unsigned char status;
 unsigned char str[MAX_LEN];
 unsigned char RC_size;

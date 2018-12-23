@@ -1,12 +1,12 @@
 /**
  * @brief A library for R308 fingerprint module.
  *
- * @file x_r308.cpp
+ * @file r308.cpp
  * @author Jason C.H
  * @date 2018-09-02
  */
 
-#include <x_r308.h>
+#include <r308.h>
 
 const uint8_t R308::packHead[6] PROGMEM = {0xEF, 0x01, 0xFF, 0xFF, 0xFF, 0xFF};
 const uint8_t R308::packInit[10] PROGMEM = {0x01, 0x00, 0x07, 0x13, 0x00,

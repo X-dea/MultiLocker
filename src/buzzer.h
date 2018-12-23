@@ -1,17 +1,16 @@
-/*!
-   \file buzzer.h
-   \brief Buzzer controller
-   \author Jason C.H
-   \date Nov. 2016
+/**
+ * @file buzzer.h
+ * @author Jason C.H
+ * @brief Controller of buzzer.
 
-   A controller of buzzer.<br />
-   一个蜂鸣器控制器。
-*/
+ * @date 2018-12-23
+ */
 
 #ifndef BUZZER_H
 #define BUZZER_H
 
 #include <Arduino.h>
+#include "config.h"
 
 // Tune definition.定义音调
 #define D0 -1
@@ -44,7 +43,6 @@ class Buzzer {
   static const uint16_t startNote[4];
   static const uint16_t openNote[2];
   static const uint16_t closeNote[2];
-  static const uint16_t pressNote[1];
   static const uint16_t setupNote[4];
 
  public:
@@ -54,12 +52,14 @@ class Buzzer {
   void open();
   void close();
   void setup();
-  /*!
-     \brief Play note.
-     \brief 播放音符
-     \param uint16_t* note(音符)/uint16_t noteLength(长度)
-  */
-  void playNote(const uint16_t *note, uint16_t noteLength);
+
+  /**
+   * @brief Play note
+   *
+   * @param note 音符
+   * @param length 长度
+   */
+  void playNote(const uint16_t *note, uint16_t length);
 };
 
 #endif

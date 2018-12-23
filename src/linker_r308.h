@@ -9,7 +9,7 @@
 #define LINKER_R308_H
 
 #include <EEPROM.h>
-#include <x_r308.h>
+#include <r308.h>
 #include "linker.h"
 #include "user.hpp"
 

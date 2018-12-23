@@ -36,7 +36,7 @@
 // #include "io_ArduMega2560.h"
 
 /**
- * HARDWARE WATCHDOG
+ * Hardware watchdog
  * 硬件看门狗
  * Warning: You may need to reburn bootloader to support this function.
  * 警告：您可能需要重新烧写引导程序以支持本功能。
@@ -44,16 +44,22 @@
 // #define USE_HARDWARE_WATCHDOG
 
 /**
- * AUTHTYPE DEFINITION
- * 定义启用的认证类型
+ * Buzzer
+ * 启用蜂鸣器
+ */
+#define USE_BUZZER
+
+/**
+ * Authentication type
+ * 认证方式
  */
 #define USE_RC522
 // #define USE_LB522
 #define USE_R308
 
 /**
- * DATASTORE DEFINITION
- * 定义启用的认证存储位置
+ * Data storage
+ * 存储位置
  */
 // #define USE_LOCAL
 

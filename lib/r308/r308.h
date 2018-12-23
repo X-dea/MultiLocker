@@ -1,7 +1,7 @@
 /**
  * @brief A library for R308 fingerprint module.
  *
- * @file x_r308.h
+ * @file r308.h
  * @author Jason C.H
  * @date 2018-09-02
  */

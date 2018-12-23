@@ -1,29 +1,31 @@
-/*!
-   \file HAL_ArduMega2560.h
-   \brief HAL for Arduino Mega 2560
-   \author Jason C.H
-   \date Feb. 2017
-*/
+/**
+ * @file io_ArduMega2560.h
+ * @author Jason C.H
+ * @brief IO defination for Arduino Atmega2560 based board.
+ * @date 2018-12-23
+ */
 
 #ifndef HAL_ARDUMEGA2560_H
 #define HAL_ARDUMEGA2560_H
 
-// I2C PORT
+// I2C Port
 #define PIN_SDA 20
 #define PIN_SCL 21
 
-// SPI PIN
+// SPI Pin
 #define PIN_MISO 50
 #define PIN_MOSI 51
 #define PIN_SCK 52
 #define PIN_SS 53
 
 // IO
-#define PIN_INBUTTON 3  // INDOOR BUTTON
-#define PIN_BUZZER 5    // BUZZER
-#define PIN_RFID_RST 5  // RFID
-#define PIN_LOCK 9      // lOCK
+#define PIN_INBUTTON 3  // Indoor button
+#define PIN_BUZZER 5    // Buzzer
+#define PIN_LOCK 9      // Lock
 #define PIN_DETECT 4    // Detector
+
+// RC522
+#define PIN_RC522_RST 5  // RFID RST
 
 // EEPROM
 #define EEPROM_SIZE 4000
