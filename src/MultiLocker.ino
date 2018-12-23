@@ -40,8 +40,7 @@ void setup() {
   pinMode(PIN_LOCK, OUTPUT);
   pinMode(PIN_INBUTTON, INPUT);
 
-  if (digitalRead(PIN_INBUTTON) == HIGH)
-    setupMode();
+  if (digitalRead(PIN_INBUTTON) == HIGH) setupMode();
 
   buzzer.start();
 
@@ -51,15 +50,13 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(PIN_INBUTTON) == HIGH)
-    open();
+  if (digitalRead(PIN_INBUTTON) == HIGH) open();
 
 #ifdef USE_RC522
   if (Rfid.findCard()) {
     bool temp = Rfid.authId();
     bool temp2 = Rfid.authKey();
-    if (temp)
-      open();
+    if (temp) open();
   }
 #endif
 
@@ -67,8 +64,7 @@ void loop() {
   if (digitalRead(PIN_DETECT) == LOW) {
     delay(300);
     r308.init();
-    if (FP.auth(kAllRole) == true)
-      open();
+    if (FP.auth(kAllRole) == true) open();
   }
 #endif
 

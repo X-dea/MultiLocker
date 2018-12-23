@@ -19,11 +19,11 @@
 #define PIN_SS 10
 
 // IO
-#define PIN_INBUTTON 4 // INDOOR BUTTON
-#define PIN_BUZZER 5   // BUZZER
-#define PIN_RFID_RST 5 // RFID
-#define PIN_LOCK 9     // lOCK
-#define PIN_DETECT 3   // Detector
+#define PIN_INBUTTON 4  // INDOOR BUTTON
+#define PIN_BUZZER 5    // BUZZER
+#define PIN_RFID_RST 5  // RFID
+#define PIN_LOCK 9      // lOCK
+#define PIN_DETECT 3    // Detector
 
 // EEPROM
 #define EEPROM_SIZE 1000

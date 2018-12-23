@@ -1,9 +1,10 @@
-/*!
-   \file config.h
-   \brief Configurations of system
-   \author Jason C.H
-   \date Jan. 2018
-*/
+/**
+ * @brief Configurations of system
+ *
+ * @file config.h
+ * @author Jason C.H
+ * @date 2018-12-23
+ */
 
 #ifndef CONFIG_H
 #define CONFIG_H
@@ -31,8 +32,8 @@
  * IO definition
  * 硬件接口定义
  */
-// #include "HAL_ArduMega328p.h"
-#include "HAL_ArduMega2560.h"
+#include "io_ArduMega328p.h"
+// #include "io_ArduMega2560.h"
 
 /**
  * HARDWARE WATCHDOG
@@ -46,7 +47,7 @@
  * AUTHTYPE DEFINITION
  * 定义启用的认证类型
  */
-// #define USE_RC522
+#define USE_RC522
 // #define USE_LB522
 #define USE_R308
 
@@ -65,6 +66,7 @@
  * Define location range of roles
  * 定义用户组区块位置
  */
+#ifdef USE_R308
 #define kRoleRootMin 1
 #define kRoleRootMax 10
 #define kRoleSecondMin 11
@@ -82,5 +84,6 @@
  * 警告：EEPROM中用户组区块信息存储将会占用8字节
  */
 #define kFingerprintPointerStart 1
+#endif
 
 #endif

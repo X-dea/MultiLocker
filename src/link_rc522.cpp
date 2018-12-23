@@ -47,8 +47,7 @@ bool RC522::authId() {
   for (int a = 0; a <= local.maxidno - 1; a++) {
     temp = 0;
     for (int b = 0; b <= 4; b++) {
-      if (local.IDList[a][b] == rc522.serNum[b])
-        temp += 1;
+      if (local.IDList[a][b] == rc522.serNum[b]) temp += 1;
     }
     if (temp == 5) {
       return true;
@@ -67,13 +66,12 @@ bool RC522::authKey() {
   blockAddr = 16;
   status = rc522.auth(PICC_AUTHENT1A, 19, local.sectorKey[blockAddr / 4],
                       rc522.serNum);
-  if (status == MI_OK) //认证区块
+  if (status == MI_OK)  //认证区块
   {
     //读数据
     if (rc522.read(blockAddr, str) == MI_OK) {
       for (int i = 0; i <= 15; i++) {
-        if (str[i] == local.authKey[0][i])
-          temp += 1;
+        if (str[i] == local.authKey[0][i]) temp += 1;
       }
       if (temp == 16)
         return true;

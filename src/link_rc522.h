@@ -12,8 +12,8 @@
 #include <SPI.h>
 
 class RC522 {
-private:
-public:
+ private:
+ public:
   RC522();
 
   /*!

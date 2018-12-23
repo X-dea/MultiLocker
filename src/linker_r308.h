@@ -8,13 +8,13 @@
 #ifndef LINKER_R308_H
 #define LINKER_R308_H
 
-#include "linker.h"
-#include "user.hpp"
 #include <EEPROM.h>
 #include <x_r308.h>
+#include "linker.h"
+#include "user.hpp"
 
 class R308Linker : public Linker {
-private:
+ private:
   /**
    * @brief Read latest fingerprint location from EEPROM.
    * @brief 从EEPROM中读取最新指纹位置
@@ -57,7 +57,7 @@ private:
    */
   uint16_t getRoleLocationRangeMin(UserRole role);
 
-public:
+ public:
   R308Linker();
   ~R308Linker();
 

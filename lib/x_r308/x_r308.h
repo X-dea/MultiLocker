@@ -19,7 +19,7 @@
 #define SerPort Serial
 
 class R308 {
-private:
+ private:
   static const uint8_t packHead[6];
   static const uint8_t packInit[10];
   static const uint8_t packGetImg[6];
@@ -75,8 +75,8 @@ private:
    */
   bool serialRead();
 
-public:
-  uint8_t packSerialRead[10]; ///< Origin retuens. 读取的返回数据
+ public:
+  uint8_t packSerialRead[10];  // Origin retuens.读取的返回数据
 
   R308();
 

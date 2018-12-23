@@ -28,8 +28,7 @@ const uint8_t R308::packEmpty[6] PROGMEM = {0x01, 0x0, 0x03, 0x0d, 0x00, 0x11};
  * @param length 包长度
  */
 inline void R308::sendPack(const uint8_t *pack, uint8_t length) {
-  for (uint8_t i = 0; i < length; i++)
-    SerPort.write(pgm_read_byte(pack + i));
+  for (uint8_t i = 0; i < length; i++) SerPort.write(pgm_read_byte(pack + i));
 }
 
 /**
@@ -37,8 +36,7 @@ inline void R308::sendPack(const uint8_t *pack, uint8_t length) {
  * @brief 清空串口缓存和上次接收的数据
  */
 inline void R308::serialClean() {
-  for (int8_t i = 0; i < 10; i++)
-    packSerialRead[i] = 0xFF;
+  for (int8_t i = 0; i < 10; i++) packSerialRead[i] = 0xFF;
   while (SerPort.read() >= 0) {
   }
 }
@@ -60,11 +58,9 @@ bool R308::serialRead() {
   // Verify pack head & sign.校验包头与标识
   if (SerPort.read() == 0xEF && SerPort.read() == 0x01) {
     for (uint8_t i = 0; i < 4; i++) {
-      if (SerPort.read() != packHead[i + 2])
-        return false;
+      if (SerPort.read() != packHead[i + 2]) return false;
     }
-    if (SerPort.read() != 0x07)
-      return false;
+    if (SerPort.read() != 0x07) return false;
   } else
     return false;
 
@@ -213,8 +209,7 @@ int8_t R308::cmdSaveFinger(uint8_t bufferID, uint16_t pageID) {
   packSaveFinger[5] = (pageID & 0xFF00) >> 8;
   packSaveFinger[6] = pageID & 0x00FF;
 
-  for (int8_t i = 0; i < 7; i++)
-    sum += packSaveFinger[i];
+  for (int8_t i = 0; i < 7; i++) sum += packSaveFinger[i];
 
   packSaveFinger[7] = (sum & 0xFF00) >> 8;
   packSaveFinger[8] = sum & 0x00FF;
@@ -251,8 +246,7 @@ int8_t R308::cmdSearch(uint8_t bufferID, uint16_t startPageID,
   packSearch[7] = (pageNum & 0xFF00) >> 8;
   packSearch[8] = pageNum & 0x00FF;
 
-  for (int8_t i = 0; i < 9; i++)
-    sum += packSearch[i];
+  for (int8_t i = 0; i < 9; i++) sum += packSearch[i];
 
   packSearch[9] = (sum & 0xFF00) >> 8;
   packSearch[10] = sum & 0x00FF;
@@ -286,8 +280,7 @@ int8_t R308::cmdDeleteModel(uint16_t startPageID, uint16_t pageNum) {
   packDeleteModel[6] = (pageNum & 0xFF00) >> 8;
   packDeleteModel[7] = pageNum & 0x00FF;
 
-  for (int8_t i = 0; i < 8; i++)
-    sum += packDeleteModel[i];
+  for (int8_t i = 0; i < 8; i++) sum += packDeleteModel[i];
 
   packDeleteModel[8] = (sum & 0xFF00) >> 8;
   packDeleteModel[9] = sum & 0x00FF;

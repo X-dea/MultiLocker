@@ -9,13 +9,13 @@
 #ifndef USER_H
 #define USER_H
 
-#include "config.h"
 #include <Arduino.h>
+#include "config.h"
 
 enum UserRole { kAllRole, kRootRole, kSecondRole, kThirdRole, kFourthRole };
 
 class User {
-public:
+ public:
   String name;
   uint16_t id;
   UserRole role;

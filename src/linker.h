@@ -11,11 +11,11 @@
 #ifndef LINKER_H
 #define LINKER_H
 
-#include "user.hpp"
 #include <Arduino.h>
+#include "user.hpp"
 
 class Linker {
-public:
+ public:
   /**
    * @brief Get user from modules and return
    * @brief 从模块获取用户并返回

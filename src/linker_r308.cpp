@@ -7,7 +7,7 @@
  */
 #include "linker_r308.h"
 
-R308 r308; // Single object of R308 library
+R308 r308;  // Single object of R308 library
 
 /**
  * @brief Read latest fingerprint location from EEPROM.
@@ -64,14 +64,14 @@ UserRole R308Linker::getUserRole(uint16_t pageID) {
  */
 uint16_t R308Linker::getRoleLocationRangeMax(UserRole role) {
   switch (role) {
-  case kRootRole:
-    return kRoleRootMax;
-  case kSecondRole:
-    return kRoleSecondMax;
-  case kThirdRole:
-    return kRoleThirdMax;
-  default:
-    return kRoleFourthMax;
+    case kRootRole:
+      return kRoleRootMax;
+    case kSecondRole:
+      return kRoleSecondMax;
+    case kThirdRole:
+      return kRoleThirdMax;
+    default:
+      return kRoleFourthMax;
   }
 }
 
@@ -84,14 +84,14 @@ uint16_t R308Linker::getRoleLocationRangeMax(UserRole role) {
  */
 uint16_t R308Linker::getRoleLocationRangeMin(UserRole role) {
   switch (role) {
-  case kFourthRole:
-    return kRoleFourthMin;
-  case kThirdRole:
-    return kRoleThirdMin;
-  case kSecondRole:
-    return kRoleSecondMin;
-  default:
-    return kRoleRootMin;
+    case kFourthRole:
+      return kRoleFourthMin;
+    case kThirdRole:
+      return kRoleThirdMin;
+    case kSecondRole:
+      return kRoleSecondMin;
+    default:
+      return kRoleRootMin;
   }
 }
 
@@ -129,10 +129,8 @@ User R308Linker::getUser() {
  */
 bool R308Linker::auth(UserRole role) {
   User user = getUser();
-  if (user.name == "Error")
-    return false;
-  if (user.role == role || role == kAllRole)
-    return true;
+  if (user.name == "Error") return false;
+  if (user.role == role || role == kAllRole) return true;
 }
 
 /**
@@ -145,8 +143,7 @@ void R308Linker::setupMode() {
   delay(300);
   r308.init();
   User user = getUser();
-  if (user.role == kAllRole || user.role == kRoleFourthMax)
-    return;
+  if (user.role == kAllRole || user.role == kRoleFourthMax) return;
   while (digitalRead(PIN_DETECT) != LOW) {
   }
   registerUser((UserRole)(user.role + 1));
@@ -167,11 +164,9 @@ bool R308Linker::registerUser(UserRole role) {
   status += abs(r308.cmdGetImg());
   status += abs(r308.cmdToBuffer2());
   status += abs(r308.cmdRegModel());
-  if (status != 0)
-    return false;
+  if (status != 0) return false;
   uint16_t offset = readFromEEPROM(role) + 1;
-  if (offset > getRoleLocationRangeMax(role))
-    return false;
+  if (offset > getRoleLocationRangeMax(role)) return false;
   r308.cmdSaveFinger(1, offset);
   saveToEEPROM(role, offset);
   return true;

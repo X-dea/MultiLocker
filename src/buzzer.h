@@ -40,14 +40,14 @@
 #define H7 1971
 
 class Buzzer {
-private:
+ private:
   static const uint16_t startNote[4];
   static const uint16_t openNote[2];
   static const uint16_t closeNote[2];
   static const uint16_t pressNote[1];
   static const uint16_t setupNote[4];
 
-public:
+ public:
   Buzzer();
 
   void start();

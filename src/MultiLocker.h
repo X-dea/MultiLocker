@@ -24,8 +24,8 @@ extern class RFID rc522;
 #endif
 
 #ifdef USE_R308
-#include "linker_r308.h"
 #include <x_r308.h>
+#include "linker_r308.h"
 R308Linker FP;
 extern class R308 r308;
 #endif

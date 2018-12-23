@@ -6,4 +6,5 @@
 .vscode/settings.json
 
 src/local.h
+src/config.h
 
