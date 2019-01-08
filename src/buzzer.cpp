@@ -13,8 +13,7 @@ const uint16_t Buzzer::openNote[] = {H3, H4};
 const uint16_t Buzzer::closeNote[] = {H4, H3};
 const uint16_t Buzzer::setupNote[] = {M3, M4, M5, M5};
 
-Buzzer::Buzzer() { pinMode(PIN_BUZZER, OUTPUT); }
-
+void Buzzer::Init() { pinMode(PIN_BUZZER, OUTPUT); }
 void Buzzer::Start() { PlayNote(startNote, 4); }
 void Buzzer::Open() { PlayNote(openNote, 2); }
 void Buzzer::Close() { PlayNote(closeNote, 2); }

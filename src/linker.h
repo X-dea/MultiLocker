@@ -17,7 +17,13 @@
 class Linker {
  public:
   /**
-   * @brief Get user from modules and return
+   * @brief Init module.
+   * @brief 初始化模块
+   */
+  virtual void Init() = 0;
+
+  /**
+   * @brief Get user from module and return
    * @brief 从模块获取用户并返回
    *
    * @return User The user got from modules
@@ -25,14 +31,15 @@ class Linker {
   virtual User GetUser() = 0;
 
   /**
-   * @brief Get user from modules and check role
-   * @brief 从模块中获取用户并认证
+   * @brief Auth user with given role.
+   * @brief 用户认证
    *
+   * @param user The user under match.等待比对的用户
    * @param role The role to match.等待比对的用户组
    * @return true Role match succeed.比对成功
    * @return false Role match failed.比对失败
    */
-  virtual bool Auth(UserRole role) = 0;
+  virtual bool Auth(User user, const UserRole &role) = 0;
 
   /**
    * @brief Module setup mode
@@ -58,7 +65,7 @@ class Linker {
    * @return true Delete succeed.移除成功
    * @return false Delete failed.移除失败
    */
-  virtual bool DeleteUser(User *user) = 0;
+  virtual bool DeleteUser(User &user) = 0;
 };
 
 #endif

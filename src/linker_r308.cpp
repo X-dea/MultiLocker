@@ -7,8 +7,6 @@
  */
 #include "linker_r308.h"
 
-R308 r308;  // Single object of R308 library
-
 /**
  * @brief Read latest fingerprint location from EEPROM.
  * @brief 从 EEPROM 中读取最新指纹位置
@@ -98,6 +96,8 @@ uint16_t R308Linker::GetRoleLocationRangeMin(UserRole role) {
 R308Linker::R308Linker() {}
 R308Linker::~R308Linker() {}
 
+void R308Linker::Init() { r308.init(); }
+
 /**
  * @brief Get user from modules and return
  * @brief 从模块获取用户并返回
@@ -120,15 +120,15 @@ User R308Linker::GetUser() {
 }
 
 /**
- * @brief Get user from modules and check role
- * @brief 从模块中获取用户并认证
+ * @brief Auth user with given role.
+ * @brief 用户认证
  *
+ * @param user The user under match.等待比对的用户
  * @param role The role to match.等待比对的用户组
  * @return true Role match succeed.比对成功
  * @return false Role match failed.比对失败
  */
-bool R308Linker::Auth(UserRole role) {
-  User user = GetUser();
+bool R308Linker::Auth(User user, const UserRole &role) {
   if (user.name == "Error") return false;
   if (user.role == role || role == kAllRole) return true;
 }
@@ -180,7 +180,7 @@ bool R308Linker::RegisterUser(UserRole role) {
  * @return true Delete succeed.移除成功
  * @return false Delete failed.移除失败
  */
-bool R308Linker::DeleteUser(User *user) {
-  r308.cmdDeleteModel(user->id, 1);
+bool R308Linker::DeleteUser(User &user) {
+  if (r308.cmdDeleteModel(user.id, 1) != 0) return false;
   return true;
 }

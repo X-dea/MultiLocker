@@ -15,6 +15,8 @@
 
 class R308Linker : public Linker {
  private:
+  R308 r308;
+
   /**
    * @brief Read latest fingerprint location from EEPROM.
    * @brief 从EEPROM中读取最新指纹位置
@@ -62,6 +64,12 @@ class R308Linker : public Linker {
   ~R308Linker();
 
   /**
+   * @brief Init module.
+   * @brief 初始化模块
+   */
+  void Init();
+
+  /**
    * @brief Get user from modules and return
    * @brief 从模块获取用户并返回
    *
@@ -70,14 +78,15 @@ class R308Linker : public Linker {
   User GetUser();
 
   /**
-   * @brief Get user from modules and check role
-   * @brief 从模块中获取用户并认证
+   * @brief Auth user with given role.
+   * @brief 用户认证
    *
+   * @param user The user under match.等待比对的用户
    * @param role The role to match.等待比对的用户组
    * @return true Role match succeed.比对成功
    * @return false Role match failed.比对失败
    */
-  bool Auth(UserRole role);
+  bool Auth(User user, const UserRole &role);
 
   /**
    * @brief Module setup mode
@@ -99,11 +108,11 @@ class R308Linker : public Linker {
    * @brief Delete user
    * @brief 移除用户
    *
-   * @param *user User to delete.待删除的用户
+   * @param user User to delete.待删除的用户
    * @return true Delete succeed.移除成功
    * @return false Delete failed.移除失败
    */
-  bool DeleteUser(User *user);
+  bool DeleteUser(User &user);
 };
 
 #endif

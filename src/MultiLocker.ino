@@ -7,18 +7,14 @@
 
 #include "MultiLocker.h"
 
-// Initialize buzzer
-// 初始化蜂鸣器
-Buzzer buzzer;
-
 // Open Lock Function
 // 开锁函数
 void open() {
-  buzzer.Open();
+  Buzzer::Open();
   digitalWrite(PIN_LOCK, HIGH);
   delay(2000);
   digitalWrite(PIN_LOCK, LOW);
-  buzzer.Close();
+  Buzzer::Close();
 }
 
 /**
@@ -26,24 +22,26 @@ void open() {
  * 设定模式
  */
 void setupMode() {
-  buzzer.Setup();
+  Buzzer::Setup();
 #ifdef USE_R308
-  FP.SetupMode();
+  r308.SetupMode();
 #endif
   for (;;) {
   }
 }
 
-// Main
-// 主程序
 void setup() {
+  // Initialize buzzer.初始化蜂鸣器
+  Buzzer::Init();
+
   pinMode(PIN_LOCK, OUTPUT);
   pinMode(PIN_INBUTTON, INPUT);
 
   if (digitalRead(PIN_INBUTTON) == HIGH) setupMode();
 
-  buzzer.Start();
+  Buzzer::Start();
 
+// Register hardware watchdog.注册硬件看门狗
 #ifdef USE_HARDWARE_WATCHDOG
   wdt_enable(WDTO_8S);
 #endif
@@ -63,8 +61,8 @@ void loop() {
 #ifdef USE_R308
   if (digitalRead(PIN_DETECT) == LOW) {
     delay(300);
-    r308.init();
-    if (FP.Auth(kAllRole) == true) open();
+    r308.Init();
+    if (r308.Auth(r308.GetUser(), kAllRole) == true) open();
   }
 #endif
 
