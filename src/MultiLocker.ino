@@ -14,11 +14,11 @@ Buzzer buzzer;
 // Open Lock Function
 // 开锁函数
 void open() {
-  buzzer.open();
+  buzzer.Open();
   digitalWrite(PIN_LOCK, HIGH);
   delay(2000);
   digitalWrite(PIN_LOCK, LOW);
-  buzzer.close();
+  buzzer.Close();
 }
 
 /**
@@ -26,9 +26,9 @@ void open() {
  * 设定模式
  */
 void setupMode() {
-  buzzer.setup();
+  buzzer.Setup();
 #ifdef USE_R308
-  FP.setupMode();
+  FP.SetupMode();
 #endif
   for (;;) {
   }
@@ -42,7 +42,7 @@ void setup() {
 
   if (digitalRead(PIN_INBUTTON) == HIGH) setupMode();
 
-  buzzer.start();
+  buzzer.Start();
 
 #ifdef USE_HARDWARE_WATCHDOG
   wdt_enable(WDTO_8S);
@@ -64,7 +64,7 @@ void loop() {
   if (digitalRead(PIN_DETECT) == LOW) {
     delay(300);
     r308.init();
-    if (FP.auth(kAllRole) == true) open();
+    if (FP.Auth(kAllRole) == true) open();
   }
 #endif
 

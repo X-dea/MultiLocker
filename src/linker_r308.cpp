@@ -16,7 +16,7 @@ R308 r308;  // Single object of R308 library
  * @param role User role.用户组
  * @return uint16_t Location.指纹位置
  */
-uint16_t R308Linker::readFromEEPROM(UserRole role) {
+uint16_t R308Linker::ReadFromEEPROM(UserRole role) {
   uint16_t fingerprintPointer = kFingerprintPointerStart + 2 * (role - 1);
   return (EEPROM.read(fingerprintPointer) << 8) |
          EEPROM.read(fingerprintPointer + 1);
@@ -29,7 +29,7 @@ uint16_t R308Linker::readFromEEPROM(UserRole role) {
  * @param role User role.用户组
  * @param location Location of latest fingerprint.最新指纹位置
  */
-void R308Linker::saveToEEPROM(UserRole role, uint16_t location) {
+void R308Linker::SaveToEEPROM(UserRole role, uint16_t location) {
   uint16_t fingerprintPointer = kFingerprintPointerStart + 2 * (role - 1);
   EEPROM.update(fingerprintPointer, location >> 8);
   EEPROM.update(fingerprintPointer + 1, location & 0x00FF);
@@ -42,7 +42,7 @@ void R308Linker::saveToEEPROM(UserRole role, uint16_t location) {
  * @param pageID Fingerprint page ID.指纹库位置
  * @return UserRole User role.用户组
  */
-UserRole R308Linker::getUserRole(uint16_t pageID) {
+UserRole R308Linker::GetUserRole(uint16_t pageID) {
   if (pageID >= kRoleRootMin && pageID <= kRoleRootMax)
     return kRootRole;
   else if (pageID >= kRoleSecondMin && pageID <= kRoleSecondMax)
@@ -62,7 +62,7 @@ UserRole R308Linker::getUserRole(uint16_t pageID) {
  * @param role User role.用户组
  * @return uint16_t Page location.指纹库位置
  */
-uint16_t R308Linker::getRoleLocationRangeMax(UserRole role) {
+uint16_t R308Linker::GetRoleLocationRangeMax(UserRole role) {
   switch (role) {
     case kRootRole:
       return kRoleRootMax;
@@ -82,7 +82,7 @@ uint16_t R308Linker::getRoleLocationRangeMax(UserRole role) {
  * @param role role User role.用户组
  * @return uint16_t Page location.指纹库位置
  */
-uint16_t R308Linker::getRoleLocationRangeMin(UserRole role) {
+uint16_t R308Linker::GetRoleLocationRangeMin(UserRole role) {
   switch (role) {
     case kFourthRole:
       return kRoleFourthMin;
@@ -104,7 +104,7 @@ R308Linker::~R308Linker() {}
  *
  * @return User The user got from modules
  */
-User R308Linker::getUser() {
+User R308Linker::GetUser() {
   int8_t status = 0;
   status += abs(r308.cmdGetImg());
   status += abs(r308.cmdToBuffer1());
@@ -114,7 +114,7 @@ User R308Linker::getUser() {
     return user;
   }
   uint16_t id = r308.packSerialRead[1] << 8 | r308.packSerialRead[2];
-  UserRole role = getUserRole(id);
+  UserRole role = GetUserRole(id);
   User user("FPUser", id, role);
   return user;
 }
@@ -127,8 +127,8 @@ User R308Linker::getUser() {
  * @return true Role match succeed.比对成功
  * @return false Role match failed.比对失败
  */
-bool R308Linker::auth(UserRole role) {
-  User user = getUser();
+bool R308Linker::Auth(UserRole role) {
+  User user = GetUser();
   if (user.name == "Error") return false;
   if (user.role == role || role == kAllRole) return true;
 }
@@ -137,16 +137,16 @@ bool R308Linker::auth(UserRole role) {
  * @brief Module setup mode
  * @brief 模块配置模式
  */
-void R308Linker::setupMode() {
+void R308Linker::SetupMode() {
   while (digitalRead(PIN_DETECT) != LOW) {
   }
   delay(300);
   r308.init();
-  User user = getUser();
+  User user = GetUser();
   if (user.role == kAllRole || user.role == kRoleFourthMax) return;
   while (digitalRead(PIN_DETECT) != LOW) {
   }
-  registerUser((UserRole)(user.role + 1));
+  RegisterUser((UserRole)(user.role + 1));
 }
 
 /**
@@ -157,7 +157,7 @@ void R308Linker::setupMode() {
  * @return true Register succeed.注册成功
  * @return false Register failed.注册失败
  */
-bool R308Linker::registerUser(UserRole role) {
+bool R308Linker::RegisterUser(UserRole role) {
   int8_t status = 0;
   status += abs(r308.cmdGetImg());
   status += abs(r308.cmdToBuffer1());
@@ -165,10 +165,10 @@ bool R308Linker::registerUser(UserRole role) {
   status += abs(r308.cmdToBuffer2());
   status += abs(r308.cmdRegModel());
   if (status != 0) return false;
-  uint16_t offset = readFromEEPROM(role) + 1;
-  if (offset > getRoleLocationRangeMax(role)) return false;
+  uint16_t offset = ReadFromEEPROM(role) + 1;
+  if (offset > GetRoleLocationRangeMax(role)) return false;
   r308.cmdSaveFinger(1, offset);
-  saveToEEPROM(role, offset);
+  SaveToEEPROM(role, offset);
   return true;
 }
 
@@ -180,7 +180,7 @@ bool R308Linker::registerUser(UserRole role) {
  * @return true Delete succeed.移除成功
  * @return false Delete failed.移除失败
  */
-bool R308Linker::deleteUser(User *user) {
+bool R308Linker::DeleteUser(User *user) {
   r308.cmdDeleteModel(user->id, 1);
   return true;
 }

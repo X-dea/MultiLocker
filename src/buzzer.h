@@ -48,10 +48,10 @@ class Buzzer {
  public:
   Buzzer();
 
-  void start();
-  void open();
-  void close();
-  void setup();
+  void Start();
+  void Open();
+  void Close();
+  void Setup();
 
   /**
    * @brief Play note
@@ -59,7 +59,7 @@ class Buzzer {
    * @param note 音符
    * @param length 长度
    */
-  void playNote(const uint16_t *note, uint16_t length);
+  void PlayNote(const uint16_t *note, uint16_t length);
 };
 
 #endif

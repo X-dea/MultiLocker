@@ -15,10 +15,10 @@ const uint16_t Buzzer::setupNote[] = {M3, M4, M5, M5};
 
 Buzzer::Buzzer() { pinMode(PIN_BUZZER, OUTPUT); }
 
-void Buzzer::start() { playNote(startNote, 4); }
-void Buzzer::open() { playNote(openNote, 2); }
-void Buzzer::close() { playNote(closeNote, 2); }
-void Buzzer::setup() { playNote(setupNote, 4); }
+void Buzzer::Start() { PlayNote(startNote, 4); }
+void Buzzer::Open() { PlayNote(openNote, 2); }
+void Buzzer::Close() { PlayNote(closeNote, 2); }
+void Buzzer::Setup() { PlayNote(setupNote, 4); }
 
 /**
  * @brief Play note
@@ -26,7 +26,7 @@ void Buzzer::setup() { playNote(setupNote, 4); }
  * @param note 音符
  * @param length 长度
  */
-void Buzzer::playNote(const uint16_t *note, uint16_t length) {
+void Buzzer::PlayNote(const uint16_t *note, uint16_t length) {
   for (uint16_t i = 0; i <= length - 1; i++) {
     tone(PIN_BUZZER, note[i]);
     delay(120);

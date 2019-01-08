@@ -22,7 +22,7 @@ class Linker {
    *
    * @return User The user got from modules
    */
-  virtual User getUser() = 0;
+  virtual User GetUser() = 0;
 
   /**
    * @brief Get user from modules and check role
@@ -32,13 +32,13 @@ class Linker {
    * @return true Role match succeed.比对成功
    * @return false Role match failed.比对失败
    */
-  virtual bool auth(UserRole role) = 0;
+  virtual bool Auth(UserRole role) = 0;
 
   /**
    * @brief Module setup mode
    * @brief 模块配置模式
    */
-  virtual void setupMode() = 0;
+  virtual void SetupMode() = 0;
 
   /**
    * @brief Register new user to given role
@@ -48,7 +48,7 @@ class Linker {
    * @return true Register succeed.注册成功
    * @return false Register failed.注册失败
    */
-  virtual bool registerUser(UserRole role) = 0;
+  virtual bool RegisterUser(UserRole role) = 0;
 
   /**
    * @brief Delete user
@@ -58,7 +58,7 @@ class Linker {
    * @return true Delete succeed.移除成功
    * @return false Delete failed.移除失败
    */
-  virtual bool deleteUser(User *user) = 0;
+  virtual bool DeleteUser(User *user) = 0;
 };
 
 #endif

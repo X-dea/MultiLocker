@@ -22,13 +22,13 @@ class R308Linker : public Linker {
    * @param role User role.用户组
    * @return uint16_t Location.指纹位置
    */
-  uint16_t readFromEEPROM(UserRole role);
+  uint16_t ReadFromEEPROM(UserRole role);
 
   /**
    * Save latest fingerprint location to EEPROM.
    * 在EEPROM中保存最新指纹位置
    */
-  void saveToEEPROM(UserRole role, uint16_t location);
+  void SaveToEEPROM(UserRole role, uint16_t location);
 
   /**
    * @brief Locate user role by fingerprint page ID
@@ -37,7 +37,7 @@ class R308Linker : public Linker {
    * @param pageID Fingerprint page ID.指纹库位置
    * @return UserRole User role.用户组
    */
-  UserRole getUserRole(uint16_t pageID);
+  UserRole GetUserRole(uint16_t pageID);
 
   /**
    * @brief Locate user role range max
@@ -46,7 +46,7 @@ class R308Linker : public Linker {
    * @param role User role.用户组
    * @return uint16_t Page location.指纹库位置
    */
-  uint16_t getRoleLocationRangeMax(UserRole role);
+  uint16_t GetRoleLocationRangeMax(UserRole role);
 
   /**
    * @brief Locate user role range min
@@ -55,7 +55,7 @@ class R308Linker : public Linker {
    * @param role role User role.用户组
    * @return uint16_t Page location.指纹库位置
    */
-  uint16_t getRoleLocationRangeMin(UserRole role);
+  uint16_t GetRoleLocationRangeMin(UserRole role);
 
  public:
   R308Linker();
@@ -67,7 +67,7 @@ class R308Linker : public Linker {
    *
    * @return User The user got from modules
    */
-  User getUser();
+  User GetUser();
 
   /**
    * @brief Get user from modules and check role
@@ -77,13 +77,13 @@ class R308Linker : public Linker {
    * @return true Role match succeed.比对成功
    * @return false Role match failed.比对失败
    */
-  bool auth(UserRole role);
+  bool Auth(UserRole role);
 
   /**
    * @brief Module setup mode
    * @brief 模块配置模式
    */
-  void setupMode();
+  void SetupMode();
 
   /**
    * @brief Register new user to given role
@@ -93,7 +93,7 @@ class R308Linker : public Linker {
    * @return true Register succeed.注册成功
    * @return false Register failed.注册失败
    */
-  bool registerUser(UserRole role);
+  bool RegisterUser(UserRole role);
 
   /**
    * @brief Delete user
@@ -103,7 +103,7 @@ class R308Linker : public Linker {
    * @return true Delete succeed.移除成功
    * @return false Delete failed.移除失败
    */
-  bool deleteUser(User *user);
+  bool DeleteUser(User *user);
 };
 
 #endif
