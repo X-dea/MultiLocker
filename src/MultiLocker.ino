@@ -62,7 +62,8 @@ void loop() {
   if (digitalRead(PIN_DETECT) == LOW) {
     delay(300);
     r308.Init();
-    if (r308.Auth(r308.GetUser(), kAllRole) == true) open();
+    User user = r308.GetUser();
+    if (r308.Auth(user, kAllRole) == true) open();
   }
 #endif
 

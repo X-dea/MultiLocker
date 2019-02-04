@@ -86,7 +86,7 @@ class R308Linker : public Linker {
    * @return true Role match succeed.比对成功
    * @return false Role match failed.比对失败
    */
-  bool Auth(User user, const UserRole &role);
+  bool Auth(User &user, const UserRole &role);
 
   /**
    * @brief Module setup mode
@@ -102,7 +102,7 @@ class R308Linker : public Linker {
    * @return true Register succeed.注册成功
    * @return false Register failed.注册失败
    */
-  bool RegisterUser(UserRole role);
+  bool RegisterUser(const UserRole &role);
 
   /**
    * @brief Delete user

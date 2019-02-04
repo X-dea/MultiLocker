@@ -39,7 +39,7 @@ class Linker {
    * @return true Role match succeed.比对成功
    * @return false Role match failed.比对失败
    */
-  virtual bool Auth(User user, const UserRole &role) = 0;
+  virtual bool Auth(User &user, const UserRole &role) = 0;
 
   /**
    * @brief Module setup mode
@@ -55,7 +55,7 @@ class Linker {
    * @return true Register succeed.注册成功
    * @return false Register failed.注册失败
    */
-  virtual bool RegisterUser(UserRole role) = 0;
+  virtual bool RegisterUser(const UserRole &role) = 0;
 
   /**
    * @brief Delete user

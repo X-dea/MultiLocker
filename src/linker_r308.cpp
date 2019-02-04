@@ -128,9 +128,9 @@ User R308Linker::GetUser() {
  * @return true Role match succeed.比对成功
  * @return false Role match failed.比对失败
  */
-bool R308Linker::Auth(User user, const UserRole &role) {
-  if (user.name == "Error") return false;
-  if (user.role == role || role == kAllRole) return true;
+bool R308Linker::Auth(User &user, const UserRole &role) {
+  if (user.name != "Error" && user.role == role) return true;
+  return false;
 }
 
 /**
@@ -157,7 +157,7 @@ void R308Linker::SetupMode() {
  * @return true Register succeed.注册成功
  * @return false Register failed.注册失败
  */
-bool R308Linker::RegisterUser(UserRole role) {
+bool R308Linker::RegisterUser(const UserRole &role) {
   int8_t status = 0;
   status += abs(r308.cmdGetImg());
   status += abs(r308.cmdToBuffer1());
